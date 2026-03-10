@@ -88,13 +88,13 @@ remove-data: ## Remove all content
 	rm -rf $(VENV_FOLDER) instance/var
 
 .PHONY: start
-start: $(VENV_FOLDER) instance/etc/zope.ini \
-	@set -a; . .env; set +a; \
+start: $(VENV_FOLDER) instance/etc/zope.ini
+	@set -a; . .env; set +a;
 	@$(BIN_FOLDER)/runwsgi instance/etc/zope.ini
 
 .PHONY: console
-console: $(VENV_FOLDER) instance/etc/zope.ini \
-	@set -a; . .env; set +a; \
+console: $(VENV_FOLDER) instance/etc/zope.ini
+	@set -a; . .env; set +a;
 	@$(BIN_FOLDER)/zconsole debug instance/etc/zope.conf
 
 .PHONY: create-site
