@@ -63,25 +63,29 @@ make start
     python3.12 -m venv .
     bin/pip install uv
     source bin/activate
+    ```
+3. Create an .env file to set NOST_KEY as an environment variable.
+
+    ```shell
     vi .env
     ```
     ```shell
     NOSTR_KEY=MyPrivateNostrKey
     ```
 
-3.  Install this code base
+4.  Install the code base
 
     ```shell
     make install
     ```
 
-4.	Create the Plone site
+5.	Create the Plone site
 
 	```shell
 	make create-site
 	```
 
-5.	Start
+6.	Start
 
 	```shell
 	make start
@@ -89,7 +93,7 @@ make start
 
 ### Install eteaching.plone.nostrmetadatasync via buildout
 
-Add the following to buildout.cfg:
+1. Add the following to buildout.cfg:
 
 	```shell
 	[buildout]
@@ -100,10 +104,15 @@ Add the following to buildout.cfg:
 	    eteaching.plone.nostrmetadatasync
 	```
 
-and run
+2. Run buildout
 
 	```shell
 	bin/buildout	
+	```
+3. Start
+
+	```shell
+	bin/instance fg
 	```
 
 ## Contribute
