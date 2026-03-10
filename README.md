@@ -63,6 +63,10 @@ make start
     python3.12 -m venv .
     bin/pip install uv
     source bin/activate
+    vi .env
+    ```
+    ```shell
+    NOSTR_KEY=MyPrivateNostrKey
     ```
 
 3.  Install this code base
