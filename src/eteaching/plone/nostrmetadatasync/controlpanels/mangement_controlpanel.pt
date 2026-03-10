@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="eteaching.plone.nostrmetadatasync" metal:use-macro="context/prefs_main_template/macros/master">
+
+<body>
+
+<metal:main 
+	metal:fill-slot="prefs_configlet_main" 
+	tal:define="authenticator context/@@authenticator/token">
+
+	<div id="content-core">
+
+		<h1 i18n:translate="">Manage Add-on</h1>
+
+		<ul>
+			<li>
+				<a
+				tal:attributes="
+				href string:@@reimport-profile-nostrmetadatasync?_authenticator=${authenticator};
+				target string:_blank" i18n:translate="">
+					Reimport eteaching.plone.nostrmetadatasync
+				</a>
+			</li>
+		</ul>	
+
+		<ul>
+			<li>
+				<a
+				tal:attributes="
+				href string:@@nostr-metadata-settings?_authenticator=${authenticator};
+				target string:_blank" i18n:translate="">
+					Configure this add-on
+				</a>
+			</li>
+		</ul>
+
+		<h1 i18n:translate="">Manage Nostr Metadata Sync</h1>
+
+		<p class="lead" i18n:translate="">
+			Here you can create, delete and update all nostr events.
+		</p>
+	
+		<form>
+			<span i18n:translate="">All Nostr events can be created or updated here</span>
+			<div>								
+				<input name="create" type="hidden" value="create">									
+			</div>
+			<button type="submit" class="btn btn-primary my-3" i18n:translate="">
+				Create
+			</button>
+		</form>
+
+		<form>
+			<span i18n:translate="">All Nostr events can be deleted here</span>
+			<div>								
+				<input name="delete" type="hidden" value="delete">									
+			</div>
+			<button type="submit" class="btn btn-primary my-3" i18n:translate="">
+				Delete
+			</button>
+		</form>
+
+	</div>
+
+</metal:main>
+
+</body>
+</html>

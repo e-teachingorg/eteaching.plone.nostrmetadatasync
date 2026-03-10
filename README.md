@@ -1,0 +1,113 @@
+
+# eteaching.plone.nostrmetadatasync
+
+Nostr integration for Plone.
+
+eteaching.plone.nostrmetadatasync synchronises metadata of Plone contents 
+with Nostr. This is done on the basis of subscribers (event handlers). When 
+content is created, deleted or modified on the Plone website, corresponding 
+Nostr events are created, signed and sent to predefined relias in the Nostr 
+network. Two control panels are also provided. One is for settings, where
+you can specify which content types and filters should be used to select
+the content affected by synchronization. The second control panel can be 
+used to create all events in the Nostre relays for the entire content 
+selected using the settings, or to send delete events.
+
+## Features
+
+* Synchronizes metadata of event based objects (e.g. plone.app.event) with Nostr Time-Based Calendar Event (NIP-52)
+* Synchronizes metadata of objects with Nostr AMB Event (NIP-AMB)
+
+## Installation
+
+### Prerequisites ✅
+
+-   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
+-   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
+-   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
+-   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
+-   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
+
+### Install eteaching.plone.nostrmetadatasync with `pip`
+
+Install
+
+```shell
+pip install eteaching.plone.nostrmetadatasync
+```
+
+Create the Plone site
+
+```shell
+make create-site
+```
+
+Start the Plone site
+
+```shell
+make start
+```
+
+### Install eteaching.plone.nostrmetadatasync with `git` 🔧
+
+1.  Clone this repository, then change your working directory
+
+    ```shell
+    git clone git@github.com:e-teachingorg/eteaching.plone.nostrmetadatasync.git
+    cd eteaching.plone.nostrmetadatasync
+    ```
+
+2. Create environment
+
+    ```shell
+    python3.12 -m venv .
+    bin/pip install uv
+    source bin/activate
+    ```
+
+3.  Install this code base
+
+    ```shell
+    make install
+    ```
+
+4.	Create the Plone site
+
+	```shell
+	make create-site
+	```
+
+5.	Start
+
+	```shell
+	make start
+	```
+
+### Install eteaching.plone.nostrmetadatasync via buildout
+
+Add the following to buildout.cfg:
+
+	```shell
+	[buildout]
+	
+	...
+	
+	eggs =
+	    eteaching.plone.nostrmetadatasync
+	```
+
+and run
+
+	```shell
+	bin/buildout	
+	```
+
+## Contribute
+
+- [Issue tracker](https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync/issues)
+- [Source code](https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync/)
+
+
+## License
+
+The project is licensed under the GPLv2.

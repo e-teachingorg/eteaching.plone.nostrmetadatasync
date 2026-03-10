@@ -1,0 +1,156 @@
+#--- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+#SOME DESCRIPTIVE TITLE.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-03-06 13:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: eteaching.plone.nostrmetadatasync\n"
+
+#: ./controlpanels/mangement_controlpanel.pt:44
+msgid "All Nostr events can be created or updated here"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:54
+msgid "All Nostr events can be deleted here"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:28
+msgid "Configure this add-on"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:48
+msgid "Create"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:58
+msgid "Delete"
+msgstr ""
+
+#: ./base.py:76
+msgid "Events created or updated"
+msgstr ""
+
+#: ./base.py:99
+msgid "Events deleted"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:39
+msgid "Here you can create, delete and update all nostr events."
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:13
+msgid "Manage Add-on"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:37
+msgid "Manage Nostr Metadata Sync"
+msgstr ""
+
+#: ./profiles.zcml:14
+msgid "Nostr Metadata Sync"
+msgstr ""
+
+#: ./profiles/default/controlpanel.xml
+msgid "Nostr Metadata Sync Settings"
+msgstr ""
+
+#: ./profiles/default/controlpanel.xml
+msgid "Nostr Metadata Sync management"
+msgstr ""
+
+#: ./subscribers.py:22
+msgid "Nostr event created because an object was published"
+msgstr ""
+
+#: ./subscribers.py:88
+msgid "Nostr event deleted because an object was deleted"
+msgstr ""
+
+#: ./subscribers.py:34
+msgid "Nostr event deleted because an object was set to private"
+msgstr ""
+
+#: ./subscribers.py:67
+msgid "Nostr event deleted in modified action because an object was set to private"
+msgstr ""
+
+#: ./subscribers.py:55
+msgid "Nostr event modified because an object was modified"
+msgstr ""
+
+#: ./profiles.zcml:14
+msgid "Nostr integration for Plone"
+msgstr ""
+
+#: ./controlpanels/controlpanel.py:48
+msgid "NostrMetadataSync settings"
+msgstr ""
+
+#: ./controlpanels/mangement_controlpanel.pt:17
+msgid "Reimport eteaching.plone.nostrmetadatasync"
+msgstr ""
+
+#: ./profiles.zcml:23
+msgid "Uninstall Nostr integration for Plone"
+msgstr ""
+
+#. Default: "All content types for which the AMB adapter is to be used are added here."
+#: ./interfaces.py:52
+msgid "help_amb_adapter_types"
+msgstr ""
+
+#. Default: "Additional query parameter for AMB content (e.g. key1=value1;key2=value2;key1=value3)"
+#: ./interfaces.py:64
+msgid "help_amb_search_params"
+msgstr ""
+
+#. Default: "All content types for which the calendar adapter is to be used are added here."
+#: ./interfaces.py:29
+msgid "help_calendar_adapter_types"
+msgstr ""
+
+#. Default: "Additional query parameter for calendar event content (e.g. key1=value1;key2=value2;key1=value3)"
+#: ./interfaces.py:41
+msgid "help_calendar_search_params"
+msgstr ""
+
+#. Default: "One relay per line (e.g. ws://localhost:10547)"
+#: ./interfaces.py:19
+msgid "help_relays"
+msgstr ""
+
+#. Default: "AMB adapter types"
+#: ./interfaces.py:50
+msgid "label_amb_adapter_types"
+msgstr ""
+
+#. Default: "AMB query parameters"
+#: ./interfaces.py:62
+msgid "label_amb_search_params"
+msgstr ""
+
+#. Default: "Calendar adapter types"
+#: ./interfaces.py:27
+msgid "label_calendar_adapter_types"
+msgstr ""
+
+#. Default: "Event query parameters"
+#: ./interfaces.py:39
+msgid "label_calendar_search_params"
+msgstr ""
+
+#. Default: "Relays"
+#: ./interfaces.py:18
+msgid "label_relays"
+msgstr ""

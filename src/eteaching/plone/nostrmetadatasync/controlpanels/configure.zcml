@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="eteaching.plone.nostrmetadatasync"
+    >
+
+  <!-- -*- extra stuff goes here -*- -->
+
+  <browser:page
+    name="nostr-metadata-sync-mangement-controlpanel"
+    for="*"
+    class=".controlpanel.NostrMetadataSyncMangementControlpanel"
+    template="mangement_controlpanel.pt"
+    permission="zope2.View"
+    layer="eteaching.plone.nostrmetadatasync.interfaces.IEteachingPloneNostrmetadatasyncLayer"
+    />
+
+
+    <!-- NOSTR METADATA SYNC SETTINGS CONTROL PANEL -->
+
+    <browser:page
+        name="nostr-metadata-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.NostrMetadataSyncSettingsControlPanel"
+        permission="cmf.ManagePortal"
+	/>
+
+
+	<!-- REIMPORT PROFILE -->
+
+    <browser:page
+        name="reimport-profile-nostrmetadatasync"
+        permission="cmf.ManagePortal"
+        class=".controlpanel.Setup"
+        attribute="reimportProfile"
+        for="Products.CMFCore.interfaces.ISiteRoot"
+    />
+
+</configure>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<registry xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+          i18n:domain="eteaching.plone.nostrmetadatasync"
+>
+
+  <!-- -*- extra stuff goes here -*- -->
+
+	<!-- OPEN BADGES SETTINGS -->
+
+	<records
+	interface="eteaching.plone.nostrmetadatasync.interfaces.INostrMetadataSyncSettings"
+	prefix="nostrmetadatasync-settings"/>
+
+
+</registry>

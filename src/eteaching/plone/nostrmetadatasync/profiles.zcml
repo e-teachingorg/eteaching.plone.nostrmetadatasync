@@ -1,0 +1,34 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="eteaching.plone.nostrmetadatasync"
+    >
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Nostr Metadata Sync"
+      description="Nostr integration for Plone"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      post_handler=".setuphandlers.post_install"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Nostr Metadata Sync"
+      description="Uninstall Nostr integration for Plone"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      post_handler=".setuphandlers.uninstall"
+      />
+
+  <!-- Hide Uninstall Profile-->
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="eteaching.plone.nostrmetadatasync"
+      />
+
+
+  <include package=".upgrades" />
+
+</configure>

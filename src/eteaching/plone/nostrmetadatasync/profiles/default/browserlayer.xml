@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layers>
+  <layer interface="eteaching.plone.nostrmetadatasync.interfaces.IEteachingPloneNostrmetadatasyncLayer"
+         name="eteaching.plone.nostrmetadatasync"
+  />
+</layers>

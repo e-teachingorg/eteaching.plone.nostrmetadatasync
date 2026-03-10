@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+        name="portal_controlpanel"
+        i18n:domain="eteaching.plone.nostrmetadatasync"
+>
+
+    <configlet
+        title="Nostr Metadata Sync management"
+        action_id="nostrmetadatasync-management"
+        appId="nostrmetadatasync-management"
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@@nostr-metadata-sync-mangement-controlpanel"
+        icon_expr="string:database-up"
+        visible="True"
+        i18n:attributes="title">
+            <permission>Manage portal</permission>
+    </configlet>
+
+    <configlet
+        title="Nostr Metadata Sync Settings"
+        action_id="nostrmetadatasync-settings"
+        appId="nostrmetadatasync-settings"
+        category="Products"
+        condition_expr=""
+        url_expr="string:${portal_url}/@@nostr-metadata-settings"
+        visible="True"
+        i18n:attributes="title"
+        remove="true">
+            <permission>Manage portal</permission>
+    </configlet>
+
+  <!-- -*- extra stuff goes here -*- -->
+
+</object>
