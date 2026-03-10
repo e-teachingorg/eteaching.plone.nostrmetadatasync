@@ -30,23 +30,24 @@ selected using the settings, or to send delete events.
 
 ### Install eteaching.plone.nostrmetadatasync with `pip`
 
-Install
+1. Install
 
-```shell
-pip install eteaching.plone.nostrmetadatasync
-```
+	```shell
+	pip install eteaching.plone.nostrmetadatasync
+	```
 
-Create the Plone site
+2.	Create the Plone site
+	
+	
+	```shell
+	make create-site
+	```
 
-```shell
-make create-site
-```
+3. Start the Plone site
 
-Start the Plone site
-
-```shell
-make start
-```
+	```shell
+	make start
+	```
 
 ### Install eteaching.plone.nostrmetadatasync with `git` 🔧
 
