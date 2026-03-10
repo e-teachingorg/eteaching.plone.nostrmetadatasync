@@ -91,7 +91,7 @@ make start
 	make start
 	```
 
-### Install eteaching.plone.nostrmetadatasync via buildout
+### Install eteaching.plone.nostrmetadatasync via `buildout`
 
 1. Add the following to buildout.cfg:
 
