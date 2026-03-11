@@ -54,6 +54,7 @@ Homepage = "https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync"
 PyPI = "https://pypi.org/project/eteaching.plone.nostrmetadatasync"
 Source = "https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync"
 Tracker = "https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync/issues"
+Changelog = "https://github.com/e-teachingorg/eteaching.plone.nostrmetadatasync/blob/main/CHANGELOG.md"
 
 
 [project.entry-points."plone.autoinclude.plugin"]
