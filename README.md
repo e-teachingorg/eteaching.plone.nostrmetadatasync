@@ -1,4 +1,3 @@
-
 # eteaching.plone.nostrmetadatasync
 
 Nostr integration for Plone.
@@ -94,7 +93,24 @@ selected using the settings, or to send delete events.
 
 ### Install eteaching.plone.nostrmetadatasync via `buildout`
 
-1. Add the following to buildout.cfg:
+1. Use zc.buildout >=5, e.g. using the following requirements.txt:
+
+	```shell
+	horse-with-no-namespace==20251105.1
+	packaging==25.0
+	pip==25.3
+	setuptools==80.9.0
+	wheel==0.45.1
+	zc.buildout==5.1.1
+	```
+2. Install Python venv and requirements:
+
+	```shell
+	python3.12 -m venv .
+	bin/pip install -r requirements.txt
+	```
+
+3. Add the following to buildout.cfg:
 
 	```shell
 	[buildout]
@@ -105,12 +121,12 @@ selected using the settings, or to send delete events.
 	    eteaching.plone.nostrmetadatasync
 	```
 
-2. Run buildout
+4. Run buildout
 
 	```shell
 	bin/buildout	
 	```
-3. Start
+5. Start
 
 	```shell
 	bin/instance fg
