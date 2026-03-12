@@ -60,7 +60,7 @@ selected using the settings, or to send delete events.
 2. Create environment
 
     ```shell
-    python3.12 -m venv .
+    python3 -m venv .
     bin/pip install uv
     source bin/activate
     ```
@@ -106,7 +106,7 @@ selected using the settings, or to send delete events.
 2. Install Python venv and requirements:
 
 	```shell
-	python3.12 -m venv .
+	bin/python3 -m venv .
 	bin/pip install -r requirements.txt
 	```
 
