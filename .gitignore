@@ -43,3 +43,6 @@ var/
 /venv/
 constraints*.txt
 requirements*.txt
+/.env
+/.project
+/.pydevproject
