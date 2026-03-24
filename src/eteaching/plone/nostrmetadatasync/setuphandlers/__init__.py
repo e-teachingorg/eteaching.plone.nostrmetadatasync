@@ -1,5 +1,11 @@
+from plone import api
 from plone.base.interfaces.installable import INonInstallable
 from zope.interface import implementer
+
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 @implementer(INonInstallable)
@@ -23,3 +29,11 @@ def post_install(context):
 
 def uninstall(context):
     """Uninstall script"""
+    unregister_controlpanel()
+
+
+def unregister_controlpanel():
+    t = "Unregister controlpanel NostrMetadataSyncMangement."
+    cp = api.portal.get_tool("portal_controlpanel")
+    cp.unregisterConfiglet("nostrmetadatasync-management")
+    logger.info(f"{t} [OK]")
