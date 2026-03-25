@@ -7,6 +7,7 @@ from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
 
 import logging
 from io import StringIO
+from zope.globalrequest import getRequest
 from zope.interface.interfaces import ComponentLookupError
 
 
@@ -174,6 +175,7 @@ def get_brains(portal_types, search_params):
 
 
 def capture_pynostr_warnings(func):
+    """Capture warnings from pynostr module"""
     stream = StringIO()
     handler = logging.StreamHandler(stream)
     handler.setLevel(logging.WARNING)
@@ -190,6 +192,8 @@ def capture_pynostr_warnings(func):
 
 
 def normalize_tags(tags):
+    """Normalize ((key, (value1, value2))) to
+       ((key, value1), (key, value2))"""
     result = []
     for key, value in tags:
         if isinstance(value, tuple):
@@ -198,3 +202,14 @@ def normalize_tags(tags):
         else:
             result.append((key, value))
     return tuple(result)
+
+
+def replace_base_url(url):
+    """ Replace Request URL3 by base_url from registry """
+    url3 = getRequest()["URL3"]
+    bu = api.portal.get_registry_record(
+            "nostrmetadatasync-settings.base_url",
+            default=None)
+    if bu:
+        return(url.replace(url3, bu))
+    return url
