@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2026-03-06 13:46+0000\n"
+"POT-Creation-Date: 2026-03-25 15:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,51 +106,61 @@ msgid "Uninstall Nostr integration for Plone"
 msgstr ""
 
 #. Default: "All content types for which the AMB adapter is to be used are added here."
-#: ./interfaces.py:52
+#: ./interfaces.py:66
 msgid "help_amb_adapter_types"
 msgstr ""
 
 #. Default: "Additional query parameter for AMB content (e.g. key1=value1;key2=value2;key1=value3)"
-#: ./interfaces.py:64
+#: ./interfaces.py:78
 msgid "help_amb_search_params"
 msgstr ""
 
+#. Default: "Custom base URL with domain and page root (e.g. https://www.e-teaching.org). If you enter a value here, it will replace the base URL in all sent URLs, such as http://localhost:8080/Plone. This allows you to test the add-on locally."
+#: ./interfaces.py:20
+msgid "help_base_url"
+msgstr ""
+
 #. Default: "All content types for which the calendar adapter is to be used are added here."
-#: ./interfaces.py:29
+#: ./interfaces.py:43
 msgid "help_calendar_adapter_types"
 msgstr ""
 
 #. Default: "Additional query parameter for calendar event content (e.g. key1=value1;key2=value2;key1=value3)"
-#: ./interfaces.py:41
+#: ./interfaces.py:55
 msgid "help_calendar_search_params"
 msgstr ""
 
 #. Default: "One relay per line (e.g. ws://localhost:10547)"
-#: ./interfaces.py:19
+#: ./interfaces.py:33
 msgid "help_relays"
 msgstr ""
 
 #. Default: "AMB adapter types"
-#: ./interfaces.py:50
+#: ./interfaces.py:64
 msgid "label_amb_adapter_types"
 msgstr ""
 
 #. Default: "AMB query parameters"
-#: ./interfaces.py:62
+#: ./interfaces.py:76
 msgid "label_amb_search_params"
 msgstr ""
 
+#. Default: "Base URL"
+#: ./interfaces.py:18
+msgid "label_base_url"
+msgstr ""
+
 #. Default: "Calendar adapter types"
-#: ./interfaces.py:27
+#: ./interfaces.py:41
 msgid "label_calendar_adapter_types"
 msgstr ""
 
 #. Default: "Event query parameters"
-#: ./interfaces.py:39
+#: ./interfaces.py:53
 msgid "label_calendar_search_params"
 msgstr ""
 
 #. Default: "Relays"
-#: ./interfaces.py:18
+#: ./interfaces.py:32
 msgid "label_relays"
 msgstr ""
