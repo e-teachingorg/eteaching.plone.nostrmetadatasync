@@ -1,6 +1,6 @@
 # eteaching.plone.nostrmetadatasync
 
-Nostr integration for Plone.
+Nostr integration for Plone 6.
 
 eteaching.plone.nostrmetadatasync synchronises metadata of Plone contents 
 with Nostr. This is done on the basis of subscribers (event handlers). When 
