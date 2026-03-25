@@ -9,6 +9,7 @@ from zope.component import adapter
 from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
 
 from zope.component import getGlobalSiteManager
+from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrTimeBasedCalendarEvent)
@@ -92,12 +93,8 @@ class NostrTimeBasedCalendarEvent:
         return ""
 
     def _event_url(self):
-
         url = self.context.absolute_url()
-        # for local testing
-        et = "https://www.e-teaching.org"
-        lo = "http://localhost:7080/eteaching"
-        return url.replace(lo, et)
+        return replace_base_url(url)
 
     def _tz_datetime(self, dt):
         if not dt:
