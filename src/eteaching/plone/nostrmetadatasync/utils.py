@@ -187,3 +187,14 @@ def capture_pynostr_warnings(func):
         logger.removeHandler(handler)
 
     return stream.getvalue().strip() or None
+
+
+def normalize_tags(tags):
+    result = []
+    for key, value in tags:
+        if isinstance(value, tuple):
+            for v in value:
+                result.append((key, v))
+        else:
+            result.append((key, value))
+    return tuple(result)
