@@ -9,7 +9,8 @@ from zope.interface import Interface
 from zope.component import adapter
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-from eteaching.plone.nostrmetadatasync.utils import normalize_tags
+from eteaching.plone.nostrmetadatasync.utils import normalize_tags,\
+    replace_base_url
 
 
 @implementer(INostrAmbEvent)
@@ -53,6 +54,7 @@ class NostrAmbEvent:
             ("dateCreated", self._date_created()),
             ("datePublished", self._date_published()),
             ("dateModified", self._date_modified()),
+            ("r", self._url())
         )
 
         # Filter elements that are None
@@ -118,3 +120,7 @@ class NostrAmbEvent:
             if isinstance(c(), DateTime):
                 return c().ISO8601()
         return None
+
+    def _url(self):
+        url = self.context.absolute_url()
+        return replace_base_url(url)
