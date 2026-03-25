@@ -1,11 +1,15 @@
 
 import hashlib
+import inspect
 
+from DateTime import DateTime
+from plone import api
 from zope.interface import implementer
 from zope.interface import Interface
 from zope.component import adapter
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
+from eteaching.plone.nostrmetadatasync.utils import normalize_tags
 
 
 @implementer(INostrAmbEvent)
@@ -39,11 +43,24 @@ class NostrAmbEvent:
         return 30142
 
     def tags(self):
-        return (
+        tags = (
             ("d", self.uid()),
             ("name", self._name()),
             ("description", self._description()),
+            ("t", self._keywords()),
+            ("inLanguage", self._in_language()),
+            ("creator:name", self._creator_name()),
+            ("dateCreated", self._date_created()),
+            ("datePublished", self._date_published()),
+            ("dateModified", self._date_modified()),
         )
+
+        # Filter elements that are None
+        filtered = tuple(item for item in tags if item[1] is not None)
+        # Normalize tuple values
+        normalized = normalize_tags(filtered)
+
+        return normalized
 
     def content(self):
         return self.context.description
@@ -57,3 +74,47 @@ class NostrAmbEvent:
 
     def _description(self):
         return self.context.description
+
+    def _keywords(self):
+        return getattr(self.context, "subject", None)
+
+    def _in_language(self):
+        return getattr(self.context, "language", None)
+
+    def _creator_name(self):
+        creator_ids = getattr(self.context, "creators", None)
+        creator_names = []
+        for creator in creator_ids:
+            user = api.user.get(username=creator)
+            name = user.getProperty('fullname')
+            if name:
+                creator_names.append(name)
+            else:
+                creator_names.append(creator)
+        if creator_names:
+            return tuple(creator_names)
+        return None
+
+    def _date_created(self):
+        c = getattr(self.context, "created", None)
+        if inspect.ismethod(c):
+            if isinstance(c(), DateTime):
+                return c().ISO8601()
+        return None
+
+    def _date_published(self):
+        c = getattr(self.context, "effective", None)
+        if inspect.ismethod(c):
+            if isinstance(c(), DateTime):
+                if c().year() > 2000:  # If there are invalid date entries
+                    return c().ISO8601()
+                else:
+                    return self._date_created()
+        return None
+
+    def _date_modified(self):
+        c = getattr(self.context, "modified", None)
+        if inspect.ismethod(c):
+            if isinstance(c(), DateTime):
+                return c().ISO8601()
+        return None
