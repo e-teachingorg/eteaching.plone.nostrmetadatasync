@@ -14,6 +14,20 @@ class IEteachingPloneNostrmetadatasyncLayer(IDefaultBrowserLayer):
 class INostrMetadataSyncSettings(Interface):
     """ Interface for Nostr MetadataSync Settings """
 
+    base_url = schema.TextLine(
+        title=_("label_base_url",
+                default="Base URL"),
+        description=_("help_base_url",
+                      default="Custom base URL with domain and page root "
+                      "(e.g. https://www.e-teaching.org). If you enter a "
+                      "value here, it will replace the base URL in all sent "
+                      "URLs, such as http://localhost:8080/Plone. This allows "
+                      "you to test the add-on locally."),
+        default="",
+        missing_value="",
+        required=False,
+    )
+
     relays = schema.Tuple(
         title=_("label_relays", default="Relays"),
         description=_(
