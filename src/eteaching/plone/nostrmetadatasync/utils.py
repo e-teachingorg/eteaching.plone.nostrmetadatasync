@@ -103,36 +103,19 @@ def parse_filters(s):
 
 
 def check_obj(obj, p_type, s_params):
-    """ Checks whether the given object is valid with regard to the
-        given portal types and filters.
-    """
-    if p_type:
-        # Supported portal type?
-        if obj.portal_type in p_type:
-            # Are there any other filters?
-            if s_params:
-                filters = parse_filters(s_params)
-                # for every single filter
-                for f in filters:
-                    obj_value = getattr(obj, f[0], None)
-                    # Does the object have such an attribute?
-                    if obj_value:
-                        if isinstance(obj_value, list):
-                            # Is the attribute value in the list?
-                            if f[1] in obj_value:
-                                return True
-                        elif isinstance(obj_value, str):
-                            # Is the attribute value equal to the string?
-                            if f[1] == obj_value:
-                                return True
-            else:
-                # If portal type and no other Filters
-                return True
-        else:
-            # If no supported portal type
-            return False
-    # If no portal type
-    return False
+    catalog = api.portal.get_tool("portal_catalog")
+    filters = parse_filters(s_params)
+    cf = {}
+
+    cf["portal_type"] = p_type
+    cf["UID"] = obj.UID()
+
+    for entry in filters:
+        cf[entry[0]] = entry[1]
+
+    brains = catalog(cf)
+
+    return True if len(brains) == 1 else False
 
 
 def suitable_adapter(obj):
