@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: plone 6.1.4\n"
-"POT-Creation-Date: 2026-03-25 15:31+0000\n"
+"POT-Creation-Date: 2026-03-26 09:02+0000\n"
 "PO-Revision-Date: 2026-03-06 12:19+0100\n"
 "Last-Translator: Markus Schmidt <m.schmidt@iwm-tuebingen.de>\n"
 "Language-Team: German\n"
@@ -77,9 +77,10 @@ msgstr "Basis-URL"
 #: interfaces.py:20
 msgid "help_base_url"
 msgstr ""
-"Eigene Basis-URL mit Domain und Plone-Seite. Wenn hier etwas eingetragen wird, wird bei "
-"allen gesendeten URLs  so etwas wie http://localhost:8080/Plone durch die hier "
-"eingegeben Base URL ersetzt. Damit lässt sich das Add-on lokal testen."
+"Eigene Basis-URL mit Domain und Plone-Seite (z.B. https://www.e-teaching."
+"org). Wenn hier etwas eingetragen wird, wird bei allen gesendeten URLs so "
+"etwas wie http://localhost:8080/Plone durch die hier eingegeben Base URL "
+"ersetzt. Damit lässt sich das Add-on lokal testen."
 
 #. Default: "Relays"
 #: interfaces.py:32
