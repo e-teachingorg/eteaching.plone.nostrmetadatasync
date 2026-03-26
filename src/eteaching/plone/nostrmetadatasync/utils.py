@@ -174,19 +174,6 @@ def capture_pynostr_warnings(func):
     return stream.getvalue().strip() or None
 
 
-def normalize_tags(tags):
-    """Normalize ((key, (value1, value2))) to
-       ((key, value1), (key, value2))"""
-    result = []
-    for key, value in tags:
-        if isinstance(value, tuple):
-            for v in value:
-                result.append((key, v))
-        else:
-            result.append((key, value))
-    return tuple(result)
-
-
 def replace_base_url(url):
     """ Replace Request URL3 by base_url from registry """
     portal_url = api.portal.get().absolute_url()

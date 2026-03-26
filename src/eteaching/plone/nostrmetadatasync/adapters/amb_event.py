@@ -9,8 +9,7 @@ from zope.interface import Interface
 from zope.component import adapter
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-from eteaching.plone.nostrmetadatasync.utils import normalize_tags,\
-    replace_base_url
+from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrAmbEvent)
@@ -40,6 +39,18 @@ class NostrAmbEvent:
     def __init__(self, context):
         self.context = context
 
+    def normalize_tags(self, tags):
+        """Normalize ((key, (value1, value2))) to
+           ((key, value1), (key, value2))"""
+        result = []
+        for key, value in tags:
+            if isinstance(value, tuple):
+                for v in value:
+                    result.append((key, v))
+            else:
+                result.append((key, value))
+        return tuple(result)
+
     def kind(self):
         return 30142
 
@@ -60,7 +71,7 @@ class NostrAmbEvent:
         # Filter elements that are None
         filtered = tuple(item for item in tags if item[1] is not None)
         # Normalize tuple values
-        normalized = normalize_tags(filtered)
+        normalized = self.normalize_tags(filtered)
 
         return normalized
 
