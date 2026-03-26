@@ -1,5 +1,17 @@
 ## 1.0.0a2 (Unreleased)
 
+### Fixed
+- check_obj for filters
+- Attribute error if user not exist
+- Attribute Error: RequestObject has no URL3
+
+### Updated
+- Project description
+- Translation
+
+## Internal
+- Moved normalize_tags to amb_event.py
+
 ## 1.0.0a1 (2026-03-25)
 
 ### Added
