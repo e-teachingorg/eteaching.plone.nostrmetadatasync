@@ -88,7 +88,8 @@ class NostrAmbEvent:
         creator_names = []
         for creator in creator_ids:
             user = api.user.get(username=creator)
-            name = user.getProperty('fullname')
+            if user:
+                name = user.getProperty('fullname')
             if name:
                 creator_names.append(name)
             else:
