@@ -189,10 +189,10 @@ def normalize_tags(tags):
 
 def replace_base_url(url):
     """ Replace Request URL3 by base_url from registry """
-    url3 = getRequest()["URL3"]
+    portal_url = api.portal.get().absolute_url()
     bu = api.portal.get_registry_record(
             "nostrmetadatasync-settings.base_url",
             default=None)
     if bu:
-        return(url.replace(url3, bu))
+        return(url.replace(portal_url, bu))
     return url
