@@ -2,7 +2,7 @@
 
 ### Fixed
 - check_obj for filters
-- Attribute error if user not exist
+- Attribute Error if user not exist
 - Attribute Error: RequestObject has no URL3
 
 ### Updated
