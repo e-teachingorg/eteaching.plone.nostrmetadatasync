@@ -9,7 +9,6 @@ from zope.interface import Interface
 from zope.component import adapter
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrAmbEvent)
@@ -39,12 +38,22 @@ class NostrAmbEvent:
     def __init__(self, context):
         self.context = context
 
+    def replace_base_url(self, url):
+        """ Replace portal url by base_url from registry """
+        portal_url = api.portal.get().absolute_url()
+        bu = api.portal.get_registry_record(
+                "nostrmetadatasync-settings.base_url",
+                default=None)
+        if bu:
+            return(url.replace(portal_url, bu))
+        return url
+
     def expand_tags(self, *tags):
         """ Respect flattening rules
             1. ("keywords": ("Math", "Physics"))
             ---> ("t", "Math"), ("t", "Physics")
-            2. ('creator', ({'name': 'Karl', 'id': 'ka'}, {'name': 'Trude', 'id': 'tr'}))
-            ---> ('creator:name', 'Karl'), ('creator:id', 'ka'), ('creator:name', 'Trude'), ('creator:id', 'tr')
+            2. ('creator', ({'id': 'ka', 'name': 'Karl'}, {'id': 'tr', 'name': 'Trude'}))
+            ---> ('creator:id', 'ka'), ('creator:name', 'Karl'), ('creator:id', 'tr'), ('creator:name', 'Trude')
             3. ('creator', ({'name': 'Karl'}, {'name': 'Trude'}))
             ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
         """
@@ -155,4 +164,4 @@ class NostrAmbEvent:
 
     def _url(self):
         url = self.context.absolute_url()
-        return replace_base_url(url)
+        return self.replace_base_url(url)
