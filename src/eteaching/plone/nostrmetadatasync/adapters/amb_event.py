@@ -57,6 +57,7 @@ class NostrAmbEvent:
     def tags(self):
         tags = (
             ("d", self.uid()),
+            ("type", self._type()),
             ("name", self._name()),
             ("description", self._description()),
             ("t", self._keywords()),
@@ -81,6 +82,9 @@ class NostrAmbEvent:
     def uid(self):
         s = self.context.UID()
         return hashlib.sha256(s.encode()).hexdigest()
+
+    def _type(self):
+        return "LearningResource"
 
     def _name(self):
         return self.context.title
