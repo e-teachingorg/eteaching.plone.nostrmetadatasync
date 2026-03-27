@@ -39,16 +39,32 @@ class NostrAmbEvent:
     def __init__(self, context):
         self.context = context
 
-    def normalize_tags(self, tags):
-        """Normalize ((key, (value1, value2))) to
-           ((key, value1), (key, value2))"""
+    def expand_tags(self, *tags):
+        """ Respect flattening rules
+            1. ("keywords": ("Math", "Physics"))
+            ---> ("t", "Math"), ("t", "Physics")
+            2. ('creator', ({'name': 'Karl', 'id': 'ka'}, {'name': 'Trude', 'id': 'tr'}))
+            ---> ('creator:name', 'Karl'), ('creator:id', 'ka'), ('creator:name', 'Trude'), ('creator:id', 'tr')
+            3. ('creator', ({'name': 'Karl'}, {'name': 'Trude'}))
+            ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
+        """
         result = []
         for key, value in tags:
-            if isinstance(value, tuple):
-                for v in value:
-                    result.append((key, v))
-            else:
-                result.append((key, value))
+            # value is iterable -> expand
+            if isinstance(value, (tuple, list)) and not isinstance(value, str):
+                # Iterable has dicts
+                if all(isinstance(v, dict) for v in value):
+                    for d in value:
+                        result += [(f"{key}:{k}", v) for k, v in d.items()]
+                else:
+                    result += [(key, v) for v in value]
+                continue
+            # Single Dict -> expand
+            if isinstance(value, dict):
+                result += [(f"{key}:{k}", v) for k, v in value.items()]
+                continue
+            # Simple value
+            result.append((key, value))
         return tuple(result)
 
     def kind(self):
@@ -62,7 +78,7 @@ class NostrAmbEvent:
             ("description", self._description()),
             ("t", self._keywords()),
             ("inLanguage", self._in_language()),
-            ("creator:name", self._creator_name()),
+            ("creator", self._creator_name()),
             ("dateCreated", self._date_created()),
             ("datePublished", self._date_published()),
             ("dateModified", self._date_modified()),
@@ -71,8 +87,8 @@ class NostrAmbEvent:
 
         # Filter elements that are None
         filtered = tuple(item for item in tags if item[1] is not None)
-        # Normalize tuple values
-        normalized = self.normalize_tags(filtered)
+        # Expand tuple values
+        normalized = self.expand_tags(*filtered)
 
         return normalized
 
@@ -100,17 +116,17 @@ class NostrAmbEvent:
 
     def _creator_name(self):
         creator_ids = getattr(self.context, "creators", None)
-        creator_names = []
-        for creator in creator_ids:
-            user = api.user.get(username=creator)
+        creator_objs = []
+        for creator_id in creator_ids:
+            user = api.user.get(username=creator_id)
             if user:
-                name = user.getProperty('fullname')
-            if name:
-                creator_names.append(name)
+                creator_name = user.getProperty('fullname')
+            if creator_name:
+                creator_objs.append({"name": creator_name})
             else:
-                creator_names.append(creator)
-        if creator_names:
-            return tuple(creator_names)
+                creator_objs.append({"name": creator_id})
+        if creator_objs:
+            return tuple(creator_objs)
         return None
 
     def _date_created(self):
