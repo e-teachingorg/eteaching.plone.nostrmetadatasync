@@ -78,7 +78,7 @@ class NostrAmbEvent:
             ("description", self._description()),
             ("t", self._keywords()),
             ("inLanguage", self._in_language()),
-            ("creator", self._creator_name()),
+            ("creator", self._creators()),
             ("dateCreated", self._date_created()),
             ("datePublished", self._date_published()),
             ("dateModified", self._date_modified()),
@@ -114,7 +114,7 @@ class NostrAmbEvent:
     def _in_language(self):
         return getattr(self.context, "language", None)
 
-    def _creator_name(self):
+    def _creators(self):
         creator_ids = getattr(self.context, "creators", None)
         creator_objs = []
         for creator_id in creator_ids:
