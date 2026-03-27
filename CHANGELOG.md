@@ -1,5 +1,12 @@
 ## 1.0.0a3 (Unreleased)
 
+### Fixed
+- nomalize_tags and renamed to expand_tags
+- creator tag
+
+### Added
+- Attribute type (LearningResource)
+
 ## 1.0.0a2 (2026-03-27)
 
 ### Fixed
