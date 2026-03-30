@@ -1,8 +1,8 @@
 ## 1.0.0a3 (Unreleased)
 
 ### Fixed
-- nomalize_tags and renamed to expand_tags
-- creator tag
+- nomalize_tags/expand_tags method cannot flatten nested values
+- creator tag does not work correctly
 
 ### Added
 - Attribute type (LearningResource)
@@ -10,6 +10,7 @@
 ### Internal
 
 - Renamed adapter attributes
+- Renamed methode nomalize_tags to expand_tags
 
 ## 1.0.0a2 (2026-03-27)
 
