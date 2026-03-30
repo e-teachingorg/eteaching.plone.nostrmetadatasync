@@ -58,22 +58,34 @@ class NostrAmbEvent:
             ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
         """
         result = []
+
+        def flatten(prefix, obj):
+            if isinstance(obj, dict):  # Dict → tiefer gehen
+                for k, v in obj.items():
+                    yield from flatten(f"{prefix}:{k}", v)
+            elif isinstance(obj, (tuple, list)) and not isinstance(obj, str):  # Iterable
+                for v in obj:
+                    yield from flatten(prefix, v)
+            else:  # Simple value
+                yield (prefix, obj)
+
         for key, value in tags:
-            # value is iterable -> expand
+
+            # Iterable
             if isinstance(value, (tuple, list)) and not isinstance(value, str):
-                # Iterable has dicts
-                if all(isinstance(v, dict) for v in value):
-                    for d in value:
-                        result += [(f"{key}:{k}", v) for k, v in d.items()]
-                else:
-                    result += [(key, v) for v in value]
+                for v in value:
+                    # Dict or simple value
+                    result += list(flatten(key, v))
                 continue
-            # Single Dict -> expand
+
+            # Simple Dict
             if isinstance(value, dict):
-                result += [(f"{key}:{k}", v) for k, v in value.items()]
+                result += list(flatten(key, value))
                 continue
-            # Simple value
+
+            # Simple Value
             result.append((key, value))
+
         return tuple(result)
 
     def kind(self):
@@ -82,16 +94,16 @@ class NostrAmbEvent:
     def tags(self):
         tags = (
             ("d", self.uid()),
-            ("type", self._type()),
-            ("name", self._name()),
-            ("description", self._description()),
-            ("t", self._keywords()),
-            ("inLanguage", self._in_language()),
-            ("creator", self._creators()),
-            ("dateCreated", self._date_created()),
-            ("datePublished", self._date_published()),
-            ("dateModified", self._date_modified()),
-            ("r", self._url())
+            ("type", self.amb_type()),
+            ("name", self.amb_name()),
+            ("description", self.amb_description()),
+            ("t", self.amb_keywords()),
+            ("inLanguage", self.amb_in_language()),
+            ("creator", self.amb_creators()),
+            ("dateCreated", self.amb_date_created()),
+            ("datePublished", self.amb_date_published()),
+            ("dateModified", self.amb_date_modified()),
+            ("r", self.amb_id())
         )
 
         # Filter elements that are None
@@ -108,22 +120,22 @@ class NostrAmbEvent:
         s = self.context.UID()
         return hashlib.sha256(s.encode()).hexdigest()
 
-    def _type(self):
+    def amb_type(self):
         return "LearningResource"
 
-    def _name(self):
+    def amb_name(self):
         return self.context.title
 
-    def _description(self):
+    def amb_description(self):
         return self.context.description
 
-    def _keywords(self):
+    def amb_keywords(self):
         return getattr(self.context, "subject", None)
 
-    def _in_language(self):
+    def amb_in_language(self):
         return getattr(self.context, "language", None)
 
-    def _creators(self):
+    def amb_creator(self):
         creator_ids = getattr(self.context, "creators", None)
         creator_objs = []
         for creator_id in creator_ids:
@@ -138,14 +150,14 @@ class NostrAmbEvent:
             return tuple(creator_objs)
         return None
 
-    def _date_created(self):
+    def amb_date_created(self):
         c = getattr(self.context, "created", None)
         if inspect.ismethod(c):
             if isinstance(c(), DateTime):
                 return c().ISO8601()
         return None
 
-    def _date_published(self):
+    def amb_date_published(self):
         c = getattr(self.context, "effective", None)
         if inspect.ismethod(c):
             if isinstance(c(), DateTime):
@@ -155,13 +167,13 @@ class NostrAmbEvent:
                     return self._date_created()
         return None
 
-    def _date_modified(self):
+    def amb_date_modified(self):
         c = getattr(self.context, "modified", None)
         if inspect.ismethod(c):
             if isinstance(c(), DateTime):
                 return c().ISO8601()
         return None
 
-    def _url(self):
+    def amb_id(self):
         url = self.context.absolute_url()
         return self.replace_base_url(url)
