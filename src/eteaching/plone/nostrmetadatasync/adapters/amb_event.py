@@ -164,7 +164,7 @@ class NostrAmbEvent:
                 if c().year() > 2000:  # If there are invalid date entries
                     return c().ISO8601()
                 else:
-                    return self._date_created()
+                    return self.amb_date_created()
         return None
 
     def amb_date_modified(self):
