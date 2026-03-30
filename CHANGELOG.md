@@ -7,6 +7,10 @@
 ### Added
 - Attribute type (LearningResource)
 
+### Internal
+
+- Renamed adapter attributes
+
 ## 1.0.0a2 (2026-03-27)
 
 ### Fixed

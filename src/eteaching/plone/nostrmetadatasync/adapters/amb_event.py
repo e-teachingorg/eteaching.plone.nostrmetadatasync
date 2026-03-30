@@ -99,7 +99,7 @@ class NostrAmbEvent:
             ("description", self.amb_description()),
             ("t", self.amb_keywords()),
             ("inLanguage", self.amb_in_language()),
-            ("creator", self.amb_creators()),
+            ("creator", self.amb_creator()),
             ("dateCreated", self.amb_date_created()),
             ("datePublished", self.amb_date_published()),
             ("dateModified", self.amb_date_modified()),
