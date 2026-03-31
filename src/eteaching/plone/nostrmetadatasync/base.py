@@ -23,8 +23,8 @@ def create_events(objs, INostrEvent):
 
         obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
-        c = INostrEvent(obj)
-        event = Event(kind=c.kind(), content=c.content(), tags=c.tags())
+        n = INostrEvent(obj)
+        event = Event(kind=n.kind(), content=n.content(), tags=n.tags())
         client.publish_event(relay_manager, private_key, event)
 
     counter = client.sync_events(relay_manager)
@@ -43,9 +43,9 @@ def delete_events(objs, INostrEvent):
 
         obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
-        converter = INostrEvent(obj)
+        n = INostrEvent(obj)
         event = Event(kind=5, content="")
-        a = f"{converter.kind()}:{pubkey}:{converter.uid()}"
+        a = f"{n.kind()}:{pubkey}:{n.uid()}"
         event.add_tag("a", a)
 
         client.publish_event(relay_manager, private_key, event)
