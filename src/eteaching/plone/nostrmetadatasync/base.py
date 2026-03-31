@@ -1,5 +1,3 @@
-from DateTime import DateTime
-from plone import api
 from Products.ZCatalog.interfaces import ICatalogBrain
 from pynostr.event import Event
 from zope.globalrequest import getRequest

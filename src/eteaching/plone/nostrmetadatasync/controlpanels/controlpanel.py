@@ -8,8 +8,6 @@ from zope.interface import Interface, implementer
 from eteaching.plone.nostrmetadatasync import _, base
 from eteaching.plone.nostrmetadatasync.interfaces import INostrMetadataSyncSettings
 
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 
 class INostrMetadataSyncMangementControlpanel(Interface):
     """Marker Interface for INostrMetadataSyncMangementControlpanel"""
