@@ -1,4 +1,3 @@
-
 import hashlib
 import inspect
 
@@ -13,48 +12,48 @@ from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
 @implementer(INostrAmbEvent)
 @adapter(Interface)
 class NostrAmbEvent:
-    """ Interface for Nostr AMB Event that reads
-        its data from a Plone type.
+    """Interface for Nostr AMB Event that reads
+    its data from a Plone type.
 
-        Kind Number: 30142
-        Defined in: NIP-AMB
-        https://nostrhub.edufeed.org/naddr1qvzqqqrcvypzp0wzr7fmrcktw4sgemxh5zsq5auh08vnvlwf0x9anusn7pkft0zgqy2hwumn8ghj7un9d3shjtnyd968gmewwp6kyqqtv4j82en9v4jz6ctdvgy0cnas
+    Kind Number: 30142
+    Defined in: NIP-AMB
+    https://nostrhub.edufeed.org/naddr1qvzqqqrcvypzp0wzr7fmrcktw4sgemxh5zsq5auh08vnvlwf0x9anusn7pkft0zgqy2hwumn8ghj7un9d3shjtnyd968gmewwp6kyqqtv4j82en9v4jz6ctdvgy0cnas
 
-        // Usage with pynostr
+    // Usage with pynostr
 
-        from pynostr.event import Event
-        from eteaching.plone.nostrmetadatasync.interfaces import
-                                    INostrAmbEvent
+    from pynostr.event import Event
+    from eteaching.plone.nostrmetadatasync.interfaces import
+                                INostrAmbEvent
 
-        amb_event = INostrAmbEvent(AMBSupportedType)
-        tags = amb_event.tags()
-        content = amb_event.content()
-        kind = amb_event.kind
+    amb_event = INostrAmbEvent(AMBSupportedType)
+    tags = amb_event.tags()
+    content = amb_event.content()
+    kind = amb_event.kind
 
-        nostr_event = Event(kind=kind, content=content, tags=tags)
+    nostr_event = Event(kind=kind, content=content, tags=tags)
     """
 
     def __init__(self, context):
         self.context = context
 
     def replace_base_url(self, url):
-        """ Replace portal url by base_url from registry """
+        """Replace portal url by base_url from registry"""
         portal_url = api.portal.get().absolute_url()
         bu = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.base_url",
-                default=None)
+            "nostrmetadatasync-settings.base_url", default=None
+        )
         if bu:
-            return(url.replace(portal_url, bu))
+            return url.replace(portal_url, bu)
         return url
 
     def expand_tags(self, *tags):
-        """ Respect flattening rules
-            1. ("keywords": ("Math", "Physics"))
-            ---> ("t", "Math"), ("t", "Physics")
-            2. ('creator', ({'id': 'ka', 'name': 'Karl'}, {'id': 'tr', 'name': 'Trude'}))
-            ---> ('creator:id', 'ka'), ('creator:name', 'Karl'), ('creator:id', 'tr'), ('creator:name', 'Trude')
-            3. ('creator', ({'name': 'Karl'}, {'name': 'Trude'}))
-            ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
+        """Respect flattening rules
+        1. ("keywords": ("Math", "Physics"))
+        ---> ("t", "Math"), ("t", "Physics")
+        2. ('creator', ({'id': 'ka', 'name': 'Karl'}, {'id': 'tr', 'name': 'Trude'}))
+        ---> ('creator:id', 'ka'), ('creator:name', 'Karl'), ('creator:id', 'tr'), ('creator:name', 'Trude')
+        3. ('creator', ({'name': 'Karl'}, {'name': 'Trude'}))
+        ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
         """
         result = []
 
@@ -62,7 +61,9 @@ class NostrAmbEvent:
             if isinstance(obj, dict):  # Dict → tiefer gehen
                 for k, v in obj.items():
                     yield from flatten(f"{prefix}:{k}", v)
-            elif isinstance(obj, (tuple, list)) and not isinstance(obj, str):  # Iterable
+            elif isinstance(obj, (tuple, list)) and not isinstance(
+                obj, str
+            ):  # Iterable
                 for v in obj:
                     yield from flatten(prefix, v)
             else:  # Simple value
@@ -102,7 +103,7 @@ class NostrAmbEvent:
             ("dateCreated", self.amb_date_created()),
             ("datePublished", self.amb_date_published()),
             ("dateModified", self.amb_date_modified()),
-            ("r", self.amb_id())
+            ("r", self.amb_id()),
         )
 
         # Filter elements that are None
@@ -140,7 +141,7 @@ class NostrAmbEvent:
         for creator_id in creator_ids:
             user = api.user.get(username=creator_id)
             if user:
-                creator_name = user.getProperty('fullname')
+                creator_name = user.getProperty("fullname")
             if creator_name:
                 creator_objs.append({"name": creator_name})
             else:

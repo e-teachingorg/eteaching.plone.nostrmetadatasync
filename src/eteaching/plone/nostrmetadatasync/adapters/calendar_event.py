@@ -5,34 +5,33 @@ from plone import api
 from zope.component import adapter, getGlobalSiteManager
 from zope.interface import Interface, implementer
 
-from eteaching.plone.nostrmetadatasync.interfaces import \
-    INostrTimeBasedCalendarEvent
+from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
 from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrTimeBasedCalendarEvent)
 @adapter(Interface)
 class NostrTimeBasedCalendarEvent:
-    """ Adapter for Nostr Time-Based Calendar Event that reads
-        its data from a Plone event object (plone.app.event).
+    """Adapter for Nostr Time-Based Calendar Event that reads
+    its data from a Plone event object (plone.app.event).
 
-        Kind Number: 31923
-        Event Range: Addressable
-        Defined in: NIP-52
-        URL: https://nostrbook.dev/kinds/31923
+    Kind Number: 31923
+    Event Range: Addressable
+    Defined in: NIP-52
+    URL: https://nostrbook.dev/kinds/31923
 
-        // Usage with pynostr
+    // Usage with pynostr
 
-        from pynostr.event import Event
-        from eteaching.plone.nostrmetadatasync.interfaces import
-                                    INostrTimeBasedCalendarEvent
+    from pynostr.event import Event
+    from eteaching.plone.nostrmetadatasync.interfaces import
+                                INostrTimeBasedCalendarEvent
 
-        calendar_event = INostrTimeBasedCalendarEvent(PloneEvent)
-        tags = calendar_event.tags()
-        content = calendar_event.content()
-        kind = calendar_event.kind
+    calendar_event = INostrTimeBasedCalendarEvent(PloneEvent)
+    tags = calendar_event.tags()
+    content = calendar_event.content()
+    kind = calendar_event.kind
 
-        nostr_event = Event(kind=kind, content=content, tags=tags)
+    nostr_event = Event(kind=kind, content=content, tags=tags)
     """
 
     def __init__(self, context):
@@ -52,7 +51,7 @@ class NostrTimeBasedCalendarEvent:
             ("end", str(self._end())),
             ("start_tzid", self._start_tzid()),
             ("end_tzid", self._end_tzid()),
-            ("r", self._event_url())
+            ("r", self._event_url()),
         )
 
     def content(self):
@@ -73,9 +72,10 @@ class NostrTimeBasedCalendarEvent:
 
     def _end(self):
         if (
-                not getattr(self.context, "open_end", False)
-                and self.tz_end
-                and self.tz_end > self.tz_start):
+            not getattr(self.context, "open_end", False)
+            and self.tz_end
+            and self.tz_end > self.tz_start
+        ):
             return int(self.tz_end.timestamp())  # to unix seconds
         return ""
 
@@ -84,9 +84,10 @@ class NostrTimeBasedCalendarEvent:
 
     def _end_tzid(self):
         if (
-                not getattr(self.context, "open_end", False)
-                and self.tz_end
-                and self.tz_end > self.tz_start):
+            not getattr(self.context, "open_end", False)
+            and self.tz_end
+            and self.tz_end > self.tz_start
+        ):
             return self.tz_end.tzinfo.zone
         return ""
 

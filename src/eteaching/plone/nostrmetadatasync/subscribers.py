@@ -1,12 +1,10 @@
-
 from plone import api
 from zope.globalrequest import getRequest
 from zope.i18n import translate
 
 from eteaching.plone.nostrmetadatasync import _
 from eteaching.plone.nostrmetadatasync.base import create_events, delete_events
-from eteaching.plone.nostrmetadatasync.utils import (is_published,
-                                                     suitable_adapter)
+from eteaching.plone.nostrmetadatasync.utils import is_published, suitable_adapter
 
 
 def transition_event(context, event):
@@ -63,8 +61,10 @@ def modified(context, event):
         print("---->Deleted (modified)")
         try:
             result = delete_events([context], adapter)
-            tmsg = _("Nostr event deleted in modified action because an "
-                     "object was set to private")
+            tmsg = _(
+                "Nostr event deleted in modified action because an "
+                "object was set to private"
+            )
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
         except Exception as e:
@@ -76,7 +76,7 @@ def modified(context, event):
 
 
 def deleted(context, event):
-    """ IObjectRemovedEvent """
+    """IObjectRemovedEvent"""
 
     adapter = suitable_adapter(context)
 

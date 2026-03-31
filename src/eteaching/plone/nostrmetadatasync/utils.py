@@ -1,22 +1,23 @@
-
 import logging
 import os
 from io import StringIO
 
 from plone import api
 from Products.CMFCore.WorkflowCore import WorkflowException
-from zope.globalrequest import getRequest
 from zope.interface.interfaces import ComponentLookupError
 
 from eteaching.plone.nostrmetadatasync.interfaces import (
-    INostrAmbEvent, INostrTimeBasedCalendarEvent)
+    INostrAmbEvent,
+    INostrTimeBasedCalendarEvent,
+)
 
 
 def login_details():
 
     try:
         relays = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.relays", default=None)
+            "nostrmetadatasync-settings.relays", default=None
+        )
     except ComponentLookupError:
         return None
 
@@ -26,7 +27,7 @@ def login_details():
 
 
 def is_published(obj):
-    """ Check if an object is published """
+    """Check if an object is published"""
 
     try:
         state = api.content.get_state(obj)
@@ -42,34 +43,42 @@ def is_published(obj):
 
 
 def get_registry_records():
-    """ get necessary records from registry """
+    """get necessary records from registry"""
 
     try:
 
         cat = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.calendar_adapter_types",
-                default=None)
+            "nostrmetadatasync-settings.calendar_adapter_types", default=None
+        )
         csp = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.calendar_search_params",
-                default=None)
+            "nostrmetadatasync-settings.calendar_search_params", default=None
+        )
         aat = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.amb_adapter_types",
-                default=None)
+            "nostrmetadatasync-settings.amb_adapter_types", default=None
+        )
         asp = api.portal.get_registry_record(
-                "nostrmetadatasync-settings.amb_search_params",
-                default=None)
+            "nostrmetadatasync-settings.amb_search_params", default=None
+        )
 
     except ComponentLookupError:
 
-        return {"calendar_adapter_types": [], "calendar_search_params": "",
-                "amb_adapter_types": [], "amb_search_params": ""}
+        return {
+            "calendar_adapter_types": [],
+            "calendar_search_params": "",
+            "amb_adapter_types": [],
+            "amb_search_params": "",
+        }
 
-    return {"calendar_adapter_types": cat, "calendar_search_params": csp,
-            "amb_adapter_types": aat, "amb_search_params": asp}
+    return {
+        "calendar_adapter_types": cat,
+        "calendar_search_params": csp,
+        "amb_adapter_types": aat,
+        "amb_search_params": asp,
+    }
 
 
 def parse_filters(s):
-    """ Parse filters from a given string in a list of lists"""
+    """Parse filters from a given string in a list of lists"""
 
     def cast(v):
         if v == "True":
@@ -98,8 +107,11 @@ def parse_filters(s):
             out.append([k, vals])
         else:
             v = vals[0]
-            out.append([k, [v]] if isinstance(
-                    v, (int, float)) and not isinstance(v, bool) else [k, v])
+            out.append(
+                [k, [v]]
+                if isinstance(v, (int, float)) and not isinstance(v, bool)
+                else [k, v]
+            )
     return out
 
 
@@ -120,7 +132,7 @@ def check_obj(obj, p_type, s_params):
 
 
 def suitable_adapter(obj):
-    """ Return the appropriate adapter based on the portal type. """
+    """Return the appropriate adapter based on the portal type."""
 
     registry_records = get_registry_records()
 
@@ -140,7 +152,7 @@ def suitable_adapter(obj):
 
 
 def get_brains(portal_types, search_params):
-    """ Return catalog brains for given portal type and search parameters """
+    """Return catalog brains for given portal type and search parameters"""
 
     catalog = api.portal.get_tool("portal_catalog")
     cf = {}
@@ -176,11 +188,11 @@ def capture_pynostr_warnings(func):
 
 
 def replace_base_url(url):
-    """ Replace Request URL3 by base_url from registry """
+    """Replace Request URL3 by base_url from registry"""
     portal_url = api.portal.get().absolute_url()
     bu = api.portal.get_registry_record(
-            "nostrmetadatasync-settings.base_url",
-            default=None)
+        "nostrmetadatasync-settings.base_url", default=None
+    )
     if bu:
-        return(url.replace(portal_url, bu))
+        return url.replace(portal_url, bu)
     return url

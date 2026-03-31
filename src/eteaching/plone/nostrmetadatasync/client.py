@@ -1,13 +1,14 @@
-
 from pynostr.key import PrivateKey
 from pynostr.relay_manager import RelayManager
 
-from eteaching.plone.nostrmetadatasync.utils import (capture_pynostr_warnings,
-                                                     login_details)
+from eteaching.plone.nostrmetadatasync.utils import (
+    capture_pynostr_warnings,
+    login_details,
+)
 
 
 def init_relay_manager():
-    """ Reads credentials and initializes the relay manager for Nostr """
+    """Reads credentials and initializes the relay manager for Nostr"""
 
     cred = login_details()
 
@@ -22,14 +23,14 @@ def init_relay_manager():
 
 
 def publish_event(relay_manager, private_key, event):
-    """Sign nostr events and publish them """
+    """Sign nostr events and publish them"""
 
     event.sign(private_key.hex())
     relay_manager.publish_event(event)
 
 
 def sync_events(relay_manager):
-    """ Sync a actions with the relay, get, count and return ok notices """
+    """Sync a actions with the relay, get, count and return ok notices"""
 
     msg = capture_pynostr_warnings(lambda: relay_manager.run_sync())
     if msg:

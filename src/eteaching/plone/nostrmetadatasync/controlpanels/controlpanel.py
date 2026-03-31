@@ -6,14 +6,13 @@ from Products.Five.browser import BrowserView
 from zope.interface import Interface, implementer
 
 from eteaching.plone.nostrmetadatasync import _, base
-from eteaching.plone.nostrmetadatasync.interfaces import \
-    INostrMetadataSyncSettings
+from eteaching.plone.nostrmetadatasync.interfaces import INostrMetadataSyncSettings
 
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class INostrMetadataSyncMangementControlpanel(Interface):
-    """ Marker Interface for INostrMetadataSyncMangementControlpanel"""
+    """Marker Interface for INostrMetadataSyncMangementControlpanel"""
 
 
 @implementer(INostrMetadataSyncMangementControlpanel)
@@ -62,7 +61,7 @@ class NostrMetadataSyncSettingsControlPanel(controlpanel.ControlPanelFormWrapper
 class Setup(BrowserView):
 
     def reimportProfile(self):
-        """ Reimport eteaching.plone.openbadges profile """
+        """Reimport eteaching.plone.openbadges profile"""
         portal_setup = self.context.portal_setup
         portal_setup.manage_importAllSteps(
             context_id="profile-eteaching.plone.nostrmetadatasync:default"

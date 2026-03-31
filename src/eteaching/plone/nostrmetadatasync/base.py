@@ -1,4 +1,3 @@
-
 from DateTime import DateTime
 from plone import api
 from Products.ZCatalog.interfaces import ICatalogBrain
@@ -8,13 +7,15 @@ from zope.i18n import translate
 
 from eteaching.plone.nostrmetadatasync import _, client
 from eteaching.plone.nostrmetadatasync.interfaces import (
-    INostrAmbEvent, INostrTimeBasedCalendarEvent)
+    INostrAmbEvent,
+    INostrTimeBasedCalendarEvent,
+)
 from eteaching.plone.nostrmetadatasync.utils import get_brains
 
 
 def create_events(objs, INostrEvent):
-    """ Creates Nostr events using a list of objects and a passed adapter and
-        publishes them on a relay. """
+    """Creates Nostr events using a list of objects and a passed adapter and
+    publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager()
 
@@ -32,8 +33,8 @@ def create_events(objs, INostrEvent):
 
 
 def delete_events(objs, INostrEvent):
-    """ Creates Nostr deletion events using a list of objects and a passed
-        adapter and publishes them on a relay. """
+    """Creates Nostr deletion events using a list of objects and a passed
+    adapter and publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager()
     pubkey = private_key.public_key.hex()
@@ -55,19 +56,19 @@ def delete_events(objs, INostrEvent):
 
 
 def create_all_events():
-    """ Search for all supported objects, get metadata and send creation events to
-        nostr
+    """Search for all supported objects, get metadata and send creation events to
+    nostr
     """
 
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
-        "nostrmetadatasync-settings.calendar_search_params"
+        "nostrmetadatasync-settings.calendar_search_params",
     )
     result1 = create_events(brains1, INostrTimeBasedCalendarEvent)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
-        "nostrmetadatasync-settings.amb_search_params"
+        "nostrmetadatasync-settings.amb_search_params",
     )
     result2 = create_events(brains2, INostrAmbEvent)
 
@@ -78,19 +79,19 @@ def create_all_events():
 
 
 def delete_all_events():
-    """ Search for all supported objects, get metadata and send deletion events to
-        nostr
+    """Search for all supported objects, get metadata and send deletion events to
+    nostr
     """
 
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
-        "nostrmetadatasync-settings.calendar_search_params"
+        "nostrmetadatasync-settings.calendar_search_params",
     )
     result1 = delete_events(brains1, INostrTimeBasedCalendarEvent)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
-        "nostrmetadatasync-settings.amb_search_params"
+        "nostrmetadatasync-settings.amb_search_params",
     )
     result2 = delete_events(brains2, INostrAmbEvent)
 
