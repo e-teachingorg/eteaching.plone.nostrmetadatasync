@@ -22,33 +22,13 @@ selected using the settings, or to send delete events.
 ### Prerequisites ✅
 
 -   An [operating system](https://6.docs.plone.org/install/create-project-cookieplone.html#prerequisites-for-installation) that runs all the requirements mentioned.
+-	Python 3.10, 3.11, 3.12, or 3.13
 -   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
 -   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
 -   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
 -   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
 
-### Install eteaching.plone.nostrmetadatasync with `pip`
-
-1. Install
-
-	```shell
-	pip install eteaching.plone.nostrmetadatasync
-	```
-
-2.	Create the Plone site
-	
-	
-	```shell
-	make create-site
-	```
-
-3. Start the Plone site
-
-	```shell
-	make start
-	```
-
-### Install eteaching.plone.nostrmetadatasync with `git` 🔧
+### Install eteaching.plone.nostrmetadatasync from source with `git` 🔧
 
 1.  Clone this repository, then change your working directory
 
@@ -64,11 +44,14 @@ selected using the settings, or to send delete events.
     bin/pip install uv
     source bin/activate
     ```
-3. Create an .env file to set NOST_KEY as an environment variable.
+3. Create an .env file
 
     ```shell
     vi .env
     ```
+
+	to set NOST_KEY as an environment variable:
+
     ```shell
     NOSTR_KEY=MyPrivateNostrKey
     ```

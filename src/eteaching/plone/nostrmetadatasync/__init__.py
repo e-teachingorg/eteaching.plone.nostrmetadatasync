@@ -4,7 +4,7 @@ import logging
 
 from zope.i18nmessageid import MessageFactory
 
-__version__ = "1.0.0a3"
+__version__ = "1.0.0b1"
 
 PACKAGE_NAME = "eteaching.plone.nostrmetadatasync"
 
