@@ -25,7 +25,6 @@ def publish_event(relay_manager, private_key, event):
     """Sign nostr events and publish them """
 
     event.sign(private_key.hex())
-    print(event)
     relay_manager.publish_event(event)
 
 
@@ -37,9 +36,6 @@ def sync_events(relay_manager):
         raise Exception(f"[NOSTR] {msg}")
 
     counter = 0
-    # while relay_manager.message_pool.has_ok_notices():
-    #     counter += 1
-    #     relay_manager.message_pool.get_ok_notice()
 
     while relay_manager.message_pool.has_ok_notices():
         ok_msg = relay_manager.message_pool.get_ok_notice()
