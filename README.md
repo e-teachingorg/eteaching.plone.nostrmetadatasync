@@ -50,7 +50,7 @@ selected using the settings, or to send delete events.
     vi .env
     ```
 
-to set NOST_KEY as an environment variable:
+	to set NOST_KEY as an environment variable:
 
     ```shell
     NOSTR_KEY=MyPrivateNostrKey
