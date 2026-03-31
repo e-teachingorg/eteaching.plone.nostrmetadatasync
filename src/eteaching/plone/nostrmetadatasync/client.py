@@ -2,8 +2,8 @@
 from pynostr.key import PrivateKey
 from pynostr.relay_manager import RelayManager
 
-from eteaching.plone.nostrmetadatasync.utils import capture_pynostr_warnings,\
-    login_details
+from eteaching.plone.nostrmetadatasync.utils import (capture_pynostr_warnings,
+                                                     login_details)
 
 
 def init_relay_manager():

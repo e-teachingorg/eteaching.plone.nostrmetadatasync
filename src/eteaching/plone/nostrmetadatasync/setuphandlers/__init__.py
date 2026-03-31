@@ -1,9 +1,8 @@
+import logging
+
 from plone import api
 from plone.base.interfaces.installable import INonInstallable
 from zope.interface import implementer
-
-import logging
-
 
 logger = logging.getLogger(__name__)
 

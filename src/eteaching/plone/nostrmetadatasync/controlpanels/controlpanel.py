@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from eteaching.plone.nostrmetadatasync import _
 from plone import api
 from plone.app.registry.browser import controlpanel
 from Products.Five.browser import BrowserView
-from zope.interface import implementer
-from zope.interface import Interface
-from eteaching.plone.nostrmetadatasync import base
-from eteaching.plone.nostrmetadatasync.interfaces import INostrMetadataSyncSettings
+from zope.interface import Interface, implementer
+
+from eteaching.plone.nostrmetadatasync import _, base
+from eteaching.plone.nostrmetadatasync.interfaces import \
+    INostrMetadataSyncSettings
 
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 

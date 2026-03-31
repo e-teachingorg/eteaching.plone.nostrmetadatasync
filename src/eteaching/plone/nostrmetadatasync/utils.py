@@ -1,14 +1,15 @@
 
+import logging
 import os
+from io import StringIO
+
 from plone import api
 from Products.CMFCore.WorkflowCore import WorkflowException
-from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
-from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-
-import logging
-from io import StringIO
 from zope.globalrequest import getRequest
 from zope.interface.interfaces import ComponentLookupError
+
+from eteaching.plone.nostrmetadatasync.interfaces import (
+    INostrAmbEvent, INostrTimeBasedCalendarEvent)
 
 
 def login_details():

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-from eteaching.plone.nostrmetadatasync.testing import FUNCTIONAL_TESTING
-from eteaching.plone.nostrmetadatasync.testing import INTEGRATION_TESTING
-from eteaching.plone.nostrmetadatasync.controlpanels.controlpanel import INostrMetadataSyncMangementControlpanel
+import unittest
+
 from plone import api
-from plone.app.testing import setRoles
-from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_ID, setRoles
 from zope.component import getMultiAdapter
 from zope.interface.interfaces import ComponentLookupError
 
-import unittest
+from eteaching.plone.nostrmetadatasync.controlpanels.controlpanel import \
+    INostrMetadataSyncMangementControlpanel
+from eteaching.plone.nostrmetadatasync.testing import (FUNCTIONAL_TESTING,
+                                                       INTEGRATION_TESTING)
 
 
 class ViewsIntegrationTest(unittest.TestCase):

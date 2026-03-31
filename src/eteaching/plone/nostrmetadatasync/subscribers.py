@@ -1,13 +1,12 @@
 
-from eteaching.plone.nostrmetadatasync.utils import is_published, suitable_adapter
-from eteaching.plone.nostrmetadatasync.base import create_events, delete_events
-
-from eteaching.plone.nostrmetadatasync import _
-
 from plone import api
-
 from zope.globalrequest import getRequest
 from zope.i18n import translate
+
+from eteaching.plone.nostrmetadatasync import _
+from eteaching.plone.nostrmetadatasync.base import create_events, delete_events
+from eteaching.plone.nostrmetadatasync.utils import (is_published,
+                                                     suitable_adapter)
 
 
 def transition_event(context, event):

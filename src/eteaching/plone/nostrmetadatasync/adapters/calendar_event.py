@@ -1,14 +1,12 @@
 import hashlib
 
-from plone import api
 import pytz
-from zope.interface import implementer
-from zope.interface import Interface
-from zope.component import adapter
+from plone import api
+from zope.component import adapter, getGlobalSiteManager
+from zope.interface import Interface, implementer
 
-from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
-
-from zope.component import getGlobalSiteManager
+from eteaching.plone.nostrmetadatasync.interfaces import \
+    INostrTimeBasedCalendarEvent
 from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 

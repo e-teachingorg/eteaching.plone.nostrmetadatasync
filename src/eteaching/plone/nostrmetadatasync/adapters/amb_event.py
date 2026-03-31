@@ -4,9 +4,8 @@ import inspect
 
 from DateTime import DateTime
 from plone import api
-from zope.interface import implementer
-from zope.interface import Interface
 from zope.component import adapter
+from zope.interface import Interface, implementer
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
 

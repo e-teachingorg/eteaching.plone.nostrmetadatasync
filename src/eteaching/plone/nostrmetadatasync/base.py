@@ -1,17 +1,15 @@
 
-from pynostr.event import Event
-
 from DateTime import DateTime
 from plone import api
-from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
-from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-from eteaching.plone.nostrmetadatasync.utils import get_brains
-from eteaching.plone.nostrmetadatasync import client
 from Products.ZCatalog.interfaces import ICatalogBrain
-from zope.i18n import translate
+from pynostr.event import Event
 from zope.globalrequest import getRequest
+from zope.i18n import translate
 
-from eteaching.plone.nostrmetadatasync import _
+from eteaching.plone.nostrmetadatasync import _, client
+from eteaching.plone.nostrmetadatasync.interfaces import (
+    INostrAmbEvent, INostrTimeBasedCalendarEvent)
+from eteaching.plone.nostrmetadatasync.utils import get_brains
 
 
 def create_events(objs, INostrEvent):
