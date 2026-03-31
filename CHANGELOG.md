@@ -1,4 +1,4 @@
-## 1.0.0a3 (Unreleased)
+## 1.0.0a3 (2026-03-31)
 
 ### Fixed
 - nomalize_tags/expand_tags method cannot flatten nested values
