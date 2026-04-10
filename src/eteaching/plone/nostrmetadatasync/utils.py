@@ -116,7 +116,12 @@ def parse_filters(s):
 
 
 def check_obj(obj, p_type, s_params):
-    catalog = api.portal.get_tool("portal_catalog")
+
+    try:
+        catalog = api.portal.get_tool("portal_catalog")
+    except Exception:
+        return False        
+
     filters = parse_filters(s_params)
     cf = {}
 
