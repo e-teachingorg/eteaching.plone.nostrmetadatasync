@@ -57,7 +57,7 @@ $(VENV_FOLDER): requirements-mxdev.txt ## Install dependencies
 ifdef CI
 	@uv venv $(VENV_FOLDER)
 else
-	@uv venv --python=3.10 $(VENV_FOLDER)
+	@uv venv --python=3.12 $(VENV_FOLDER)
 endif
 	@uv pip install -r requirements-mxdev.txt
 
