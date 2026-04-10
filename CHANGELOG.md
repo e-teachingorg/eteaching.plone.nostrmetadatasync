@@ -5,6 +5,7 @@
 ### Fixed
 - nomalize_tags/expand_tags method cannot flatten nested values
 - creator tag does not work correctly
+- Could not "make create-site"
 
 ### Added
 - Attribute type (LearningResource)
