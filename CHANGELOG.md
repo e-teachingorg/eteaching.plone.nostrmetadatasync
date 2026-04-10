@@ -1,11 +1,14 @@
-## 1.0.0b1 (Unreleased)
+## 1.0.0b1 (2026-04-10)
+
+### Fixed
+- Could not "make create-site"
+- TestSetupUninstall
 
 ## 1.0.0a3 (2026-03-31)
 
 ### Fixed
 - nomalize_tags/expand_tags method cannot flatten nested values
 - creator tag does not work correctly
-- Could not "make create-site"
 
 ### Added
 - Attribute type (LearningResource)
