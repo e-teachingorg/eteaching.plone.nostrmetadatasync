@@ -119,10 +119,10 @@ def check_obj(obj, p_type, s_params):
 
     try:
         catalog = api.portal.get_tool("portal_catalog")
+        filters = parse_filters(s_params)
     except Exception:
         return False        
 
-    filters = parse_filters(s_params)
     cf = {}
 
     cf["portal_type"] = p_type
