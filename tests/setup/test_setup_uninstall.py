@@ -14,6 +14,6 @@ class TestSetupUninstall:
 
     def test_browserlayer_not_registered(self, browser_layers):
         """Test that IEteachingPloneNostrmetadatasyncLayer is not registered."""
-        from eteaching.plone.nostrmetadatasync.interfaces import IBrowserLayer
+        from eteaching.plone.nostrmetadatasync.interfaces import IEteachingPloneNostrmetadatasyncLayer
 
-        assert IBrowserLayer not in browser_layers
+        assert IEteachingPloneNostrmetadatasyncLayer not in browser_layers
