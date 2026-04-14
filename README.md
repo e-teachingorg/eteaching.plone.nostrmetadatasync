@@ -38,7 +38,7 @@ selected using the settings, or to send delete events.
     cd eteaching.plone.nostrmetadatasync
     ```
 
-2. Create environment
+2. Create environment and install uv
 
     ```shell
     python3 -m venv .
