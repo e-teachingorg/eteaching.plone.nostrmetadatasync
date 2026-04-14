@@ -14,8 +14,10 @@ selected using the settings, or to send delete events.
 
 ## Features
 
-* Synchronizes metadata of event based objects (e.g. plone.app.event) with Nostr Time-Based Calendar Event (NIP-52)
-* Synchronizes metadata of objects with Nostr AMB Event (NIP-AMB)
+* Real-time synchronization between metadata for event-based plone objects (e.g. plone.app.event) and Nostr time-based calendar events (NIP-52).
+* Real-time synchronization between metadata for educational materials and Nostr AMB events (NIP-AMB)
+* Initial creation of Nostr events for the metadata of all supported objects.
+* Specific configuration options where portal types and additional restrictions for synchronization can be selected
 
 ## Installation
 
