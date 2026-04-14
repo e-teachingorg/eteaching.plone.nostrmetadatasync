@@ -87,6 +87,7 @@ selected using the settings, or to send delete events.
 	wheel==0.45.1
 	zc.buildout==5.1.1
 	```
+
 2. Install Python venv and requirements:
 
 	```shell
@@ -94,23 +95,40 @@ selected using the settings, or to send delete events.
 	bin/pip install -r requirements.txt
 	```
 
-3. Add the following to buildout.cfg:
+3. Create an .env file
+
+    ```shell
+    vi .env
+    ```
+
+	to set NOST_KEY as an environment variable:
+
+    ```shell
+    NOSTR_KEY=MyPrivateNostrKey
+    ```
+
+4. Add the following to buildout.cfg:
 
 	```shell
 	[buildout]
 	
-	...
-	
 	eggs =
 	    eteaching.plone.nostrmetadatasync
+	...
+
+	[instance]
+
+	environment-vars =
+		NOSTR_KEY ${env:NOSTR_KEY}
+	...
 	```
 
-4. Run buildout
+5. Run buildout
 
 	```shell
 	bin/buildout	
 	```
-5. Start
+6. Start
 
 	```shell
 	bin/instance fg
