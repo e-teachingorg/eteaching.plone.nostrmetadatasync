@@ -28,7 +28,6 @@ selected using the settings, or to send delete events.
 -   [uv](https://6.docs.plone.org/install/create-project-cookieplone.html#uv)
 -   [Make](https://6.docs.plone.org/install/create-project-cookieplone.html#make)
 -   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
--   [Docker](https://docs.docker.com/get-started/get-docker/) (optional)
 
 ### Install eteaching.plone.nostrmetadatasync from source with `git` 🔧
 
