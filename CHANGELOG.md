@@ -1,5 +1,9 @@
 ## 1.0.0b2 (Unreleased)
 
+### Internal
+
+- Uses getAdapter in base.py
+
 ## 1.0.0b1 (2026-04-10)
 
 ### Fixed
