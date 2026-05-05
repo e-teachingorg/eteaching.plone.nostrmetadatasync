@@ -16,8 +16,8 @@ def create_events(objs, INostrEvent):
     publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager()
-
-    for i in objs:
+    
+    for count, i in enumerate(objs):
 
         obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
@@ -25,7 +25,7 @@ def create_events(objs, INostrEvent):
         event = Event(kind=n.kind(), content=n.content(), tags=n.tags())
         client.publish_event(relay_manager, private_key, event)
 
-    counter = client.sync_events(relay_manager)
+    counter = client.sync_events(relay_manager, count)
 
     return counter
 
@@ -37,7 +37,7 @@ def delete_events(objs, INostrEvent):
     relay_manager, private_key = client.init_relay_manager()
     pubkey = private_key.public_key.hex()
 
-    for i in objs:
+    for count, i in enumerate(objs):
 
         obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
@@ -48,7 +48,7 @@ def delete_events(objs, INostrEvent):
 
         client.publish_event(relay_manager, private_key, event)
 
-    counter = client.sync_events(relay_manager)
+    counter = client.sync_events(relay_manager, count)
 
     return counter
 
@@ -57,18 +57,23 @@ def create_all_events():
     """Search for all supported objects, get metadata and send creation events to
     nostr
     """
+    
+    result1 = 0
+    result2 = 0
 
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
         "nostrmetadatasync-settings.calendar_search_params",
     )
-    result1 = create_events(brains1, INostrTimeBasedCalendarEvent)
+    if brains1:
+        result1 = create_events(brains1, INostrTimeBasedCalendarEvent)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
-    result2 = create_events(brains2, INostrAmbEvent)
+    if brains2:
+        result2 = create_events(brains2, INostrAmbEvent)
 
     msg = _("Events created or updated")
     msg = translate(msg, context=getRequest())
@@ -81,17 +86,22 @@ def delete_all_events():
     nostr
     """
 
+    result1 = 0
+    result2 = 0
+
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
         "nostrmetadatasync-settings.calendar_search_params",
     )
-    result1 = delete_events(brains1, INostrTimeBasedCalendarEvent)
+    if brains1:
+        result1 = delete_events(brains1, INostrTimeBasedCalendarEvent)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
-    result2 = delete_events(brains2, INostrAmbEvent)
+    if brains2:
+        result2 = delete_events(brains2, INostrAmbEvent)
 
     msg = _("Events deleted")
     msg = translate(msg, context=getRequest())

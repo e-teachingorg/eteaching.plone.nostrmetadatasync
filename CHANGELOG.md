@@ -1,5 +1,10 @@
 ## 1.0.0b2 (Unreleased)
 
+### Fixed
+
+- create_events and delete_events are called even if the number of objects is 0
+- There is not enough time available to display the synchronization results for relay_manager.message_pool
+
 ### Internal
 
 - Uses getAdapter in base.py

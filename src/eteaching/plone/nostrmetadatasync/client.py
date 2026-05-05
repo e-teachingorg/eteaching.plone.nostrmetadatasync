@@ -1,3 +1,4 @@
+import time
 from pynostr.key import PrivateKey
 from pynostr.relay_manager import RelayManager
 
@@ -29,13 +30,17 @@ def publish_event(relay_manager, private_key, event):
     relay_manager.publish_event(event)
 
 
-def sync_events(relay_manager):
+def sync_events(relay_manager, count):
     """Sync a actions with the relay, get, count and return ok notices"""
 
     msg = capture_pynostr_warnings(lambda: relay_manager.run_sync())
     if msg:
         raise Exception(f"[NOSTR] {msg}")
-
+    
+    # allow the messages to send
+    if count > 1:
+        time.sleep(5)
+    
     counter = 0
 
     while relay_manager.message_pool.has_ok_notices():
