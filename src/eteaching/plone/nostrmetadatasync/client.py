@@ -40,6 +40,7 @@ def sync_events(relay_manager, count):
     # allow the messages to send
     if count > 1:
         time.sleep(5)
+        print("-------> Sleep 5 sec")
     
     counter = 0
 
