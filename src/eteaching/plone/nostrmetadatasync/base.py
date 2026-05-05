@@ -11,12 +11,15 @@ from eteaching.plone.nostrmetadatasync.interfaces import (
 from eteaching.plone.nostrmetadatasync.utils import get_brains
 
 
+all_events_timeout = 6
+
+
 def create_events(objs, INostrEvent, timeout):
     """Creates Nostr events using a list of objects and a passed adapter and
     publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager(timeout)
-    
+
     for count, i in enumerate(objs):
 
         obj = i.getObject() if ICatalogBrain.providedBy(i) else i
@@ -57,7 +60,7 @@ def create_all_events():
     """Search for all supported objects, get metadata and send creation events to
     nostr
     """
-    
+
     result1 = 0
     result2 = 0
 
@@ -66,14 +69,15 @@ def create_all_events():
         "nostrmetadatasync-settings.calendar_search_params",
     )
     if brains1:
-        result1 = create_events(brains1, INostrTimeBasedCalendarEvent, 6)
+        result1 = create_events(brains1, INostrTimeBasedCalendarEvent,
+                                all_events_timeout)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
     if brains2:
-        result2 = create_events(brains2, INostrAmbEvent, 6)
+        result2 = create_events(brains2, INostrAmbEvent, all_events_timeout)
 
     msg = _("Events created or updated")
     msg = translate(msg, context=getRequest())
@@ -94,14 +98,15 @@ def delete_all_events():
         "nostrmetadatasync-settings.calendar_search_params",
     )
     if brains1:
-        result1 = delete_events(brains1, INostrTimeBasedCalendarEvent, 6)
+        result1 = delete_events(brains1, INostrTimeBasedCalendarEvent,
+                                all_events_timeout)
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
     if brains2:
-        result2 = delete_events(brains2, INostrAmbEvent, 6)
+        result2 = delete_events(brains2, INostrAmbEvent, all_events_timeout)
 
     msg = _("Events deleted")
     msg = translate(msg, context=getRequest())

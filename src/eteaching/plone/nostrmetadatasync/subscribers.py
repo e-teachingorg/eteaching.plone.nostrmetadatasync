@@ -7,6 +7,9 @@ from eteaching.plone.nostrmetadatasync.base import create_events, delete_events
 from eteaching.plone.nostrmetadatasync.utils import is_published, suitable_adapter
 
 
+timeout = 2
+
+
 def transition_event(context, event):
     """Listens to internal 'transition' events of plone cms"""
 
@@ -15,7 +18,7 @@ def transition_event(context, event):
 
     if published and adapter:
         try:
-            result = create_events([context], adapter, 2)
+            result = create_events([context], adapter, timeout)
             tmsg = _("Nostr event created because an object was published")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -27,7 +30,7 @@ def transition_event(context, event):
     if not published and adapter:
         print("--->Delete (unpublished)")
         try:
-            result = delete_events([context], adapter, 2)
+            result = delete_events([context], adapter, timeout)
             tmsg = _("Nostr event deleted because an object was set to private")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -48,7 +51,7 @@ def modified(context, event):
     if published and adapter:
         print("---->Modify...")
         try:
-            result = create_events([context], adapter)
+            result = create_events([context], adapter, timeout)
             tmsg = _("Nostr event modified because an object was modified")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -60,7 +63,7 @@ def modified(context, event):
     if not published and adapter:
         print("---->Deleted (modified)")
         try:
-            result = delete_events([context], adapter)
+            result = delete_events([context], adapter, timeout)
             tmsg = _(
                 "Nostr event deleted in modified action because an "
                 "object was set to private"
@@ -83,7 +86,7 @@ def deleted(context, event):
     if adapter:
         print("---> Delete (deleted)")
         try:
-            result = delete_events([context], adapter)
+            result = delete_events([context], adapter, timeout)
             tmsg = _("Nostr event deleted because an object was deleted")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
