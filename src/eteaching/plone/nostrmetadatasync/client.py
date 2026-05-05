@@ -13,7 +13,7 @@ def init_relay_manager():
 
     cred = login_details()
 
-    relay_manager = RelayManager(timeout=1)
+    relay_manager = RelayManager(timeout=6)
 
     for relay in cred["relays"]:
         relay_manager.add_relay(relay)
