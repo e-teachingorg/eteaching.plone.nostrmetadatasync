@@ -15,7 +15,7 @@ def transition_event(context, event):
 
     if published and adapter:
         try:
-            result = create_events([context], adapter)
+            result = create_events([context], adapter, 2)
             tmsg = _("Nostr event created because an object was published")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -27,7 +27,7 @@ def transition_event(context, event):
     if not published and adapter:
         print("--->Delete (unpublished)")
         try:
-            result = delete_events([context], adapter)
+            result = delete_events([context], adapter, 2)
             tmsg = _("Nostr event deleted because an object was set to private")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"

@@ -8,12 +8,12 @@ from eteaching.plone.nostrmetadatasync.utils import (
 )
 
 
-def init_relay_manager():
+def init_relay_manager(timeout):
     """Reads credentials and initializes the relay manager for Nostr"""
 
     cred = login_details()
 
-    relay_manager = RelayManager(timeout=6)
+    relay_manager = RelayManager(timeout=timeout)
 
     for relay in cred["relays"]:
         relay_manager.add_relay(relay)
