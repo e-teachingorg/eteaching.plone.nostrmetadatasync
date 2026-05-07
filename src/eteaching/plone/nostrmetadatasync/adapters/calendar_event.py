@@ -2,7 +2,7 @@ import hashlib
 
 import pytz
 from plone import api
-from zope.component import adapter, getGlobalSiteManager
+from zope.component import adapter
 from zope.interface import Interface, implementer
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
