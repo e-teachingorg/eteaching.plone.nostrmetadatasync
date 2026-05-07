@@ -7,6 +7,7 @@ from zope.component import adapter
 from zope.interface import Interface, implementer
 
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
+from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrAmbEvent)
@@ -35,16 +36,6 @@ class NostrAmbEvent:
 
     def __init__(self, context):
         self.context = context
-
-    def replace_base_url(self, url):
-        """Replace portal url by base_url from registry"""
-        portal_url = api.portal.get().absolute_url()
-        bu = api.portal.get_registry_record(
-            "nostrmetadatasync-settings.base_url", default=None
-        )
-        if bu:
-            return url.replace(portal_url, bu)
-        return url
 
     def expand_tags(self, *tags):
         """Respect flattening rules
@@ -176,4 +167,4 @@ class NostrAmbEvent:
 
     def amb_id(self):
         url = self.context.absolute_url()
-        return self.replace_base_url(url)
+        return replace_base_url(url)
