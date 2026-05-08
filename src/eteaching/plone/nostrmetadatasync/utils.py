@@ -1,3 +1,5 @@
+
+from DateTime import DateTime
 import logging
 import os
 from io import StringIO
@@ -38,7 +40,13 @@ def is_published(obj):
     except api.exc.InvalidParameterError:
         return False
     if state == "published":
+
+        now = DateTime()
+        publication_date = obj.effective()
+        if publication_date and publication_date > now:
+            return False
         return True
+
     return False
 
 

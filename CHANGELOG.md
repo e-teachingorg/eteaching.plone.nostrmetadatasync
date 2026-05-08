@@ -4,6 +4,7 @@
 
 - create_events and delete_events are called even if the number of objects is 0
 - There is not enough time available to display the synchronization results for relay_manager.message_pool
+- Metadata is sent to Nostr even if the publication date is in the future
 
 ### Internal
 
