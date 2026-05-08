@@ -167,7 +167,8 @@ msgstr "Nostre-Eintrag erstellt, da ein Objekt veröffentlicht wurde"
 msgid "Nostr event deleted because an object was set to private"
 msgstr ""
 "Nostre-Eintrag gelöscht, weil das Objekt privat gesetzt wurde oder das "
-"Veröffentlichungsdatum in der Zukunft liegt"
+"Veröffentlichungsdatum in der Zukunft oder das Ablaufdatum in der "
+"Vergangenheit liegt"
 
 #: subscribers.py:55
 msgid "Nostr event modified because an object was modified"
@@ -178,7 +179,8 @@ msgid ""
 "Nostr event deleted in modified action because an object was set to private"
 msgstr "" 
 "Nostr-Eintrag gelöscht, da ein privates Objekt geändert wurde oder das "
-"Veröffentlichungsdatum in der Zukunft liegt"
+"Veröffentlichungsdatum in der Zukunft oder das Ablaufdatum in der "
+"Vergangenheit liegt"
 
 #: subscribers.py:88
 msgid "Nostr event deleted because an object was deleted"

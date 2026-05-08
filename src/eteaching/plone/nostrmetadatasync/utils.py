@@ -43,7 +43,10 @@ def is_published(obj):
 
         now = DateTime()
         publication_date = obj.effective()
+        expiration_date = obj.expires()
         if publication_date and publication_date > now:
+            return False
+        if expiration_date and expiration_date < now:
             return False
         return True
 
