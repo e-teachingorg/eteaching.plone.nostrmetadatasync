@@ -1,14 +1,10 @@
-## 1.0.0b2 (Unreleased)
+## 1.0.0b2 (2026-05-12)
 
 ### Fixed
 
 - create_events and delete_events are called even if the number of objects is 0
 - There is not enough time available to display the synchronization results for relay_manager.message_pool
 - Metadata is sent to Nostr even if the publication date is in the future or the expiration_date is in the past
-
-### Internal
-
-- Uses getAdapter in base.py
 
 ## 1.0.0b1 (2026-04-10)
 
