@@ -57,8 +57,8 @@
     />
 
   <subscriber
-    for="plone.dexterity.interfaces.IDexterityContent
-         zope.lifecycleevent.IObjectRemovedEvent"
+    for="plone.dexterity.interfaces.IDexterityContent 
+    	zope.lifecycleevent.interfaces.IObjectRemovedEvent"
     handler=".subscribers.deleted"
     />
 

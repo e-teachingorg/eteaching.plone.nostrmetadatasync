@@ -18,7 +18,9 @@ def transition_event(context, event):
 
     if published and adapter:
         try:
-            result = create_events([context], adapter, timeout)
+            # result = create_events([context], adapter, timeout)
+            event_sets = ({"brains": (context,), "adapter": adapter},)
+            result = create_events(event_sets, timeout)
             tmsg = _("Nostr event created because an object was published")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -30,7 +32,9 @@ def transition_event(context, event):
     if not published and adapter:
         print("--->Delete (unpublished)")
         try:
-            result = delete_events([context], adapter, timeout)
+            # result = delete_events([context], adapter, timeout)
+            event_sets = ({"brains": (context,), "adapter": adapter},)
+            result = delete_events(event_sets, timeout)
             tmsg = _("Nostr event deleted because an object was set to private")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -51,7 +55,9 @@ def modified(context, event):
     if published and adapter:
         print("---->Modify...")
         try:
-            result = create_events([context], adapter, timeout)
+            # result = create_events([context], adapter, timeout)
+            event_sets = ({"brains": (context,), "adapter": adapter},)
+            result = create_events(event_sets, timeout)
             tmsg = _("Nostr event modified because an object was modified")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"
@@ -63,7 +69,9 @@ def modified(context, event):
     if not published and adapter:
         print("---->Deleted (modified)")
         try:
-            result = delete_events([context], adapter, timeout)
+            # result = delete_events([context], adapter, timeout)
+            event_sets = ({"brains": (context,), "adapter": adapter},)
+            result = delete_events(event_sets, timeout)
             tmsg = _(
                 "Nostr event deleted in modified action because an "
                 "object was set to private"
@@ -86,7 +94,9 @@ def deleted(context, event):
     if adapter:
         print("---> Delete (deleted)")
         try:
-            result = delete_events([context], adapter, timeout)
+            # result = delete_events([context], adapter, timeout)
+            event_sets = ({"brains": (context,), "adapter": adapter},)
+            result = delete_events(event_sets, timeout)
             tmsg = _("Nostr event deleted because an object was deleted")
             tmsg = translate(tmsg, context=getRequest())
             tmsg = f"{result} {tmsg}"

@@ -14,42 +14,46 @@ from eteaching.plone.nostrmetadatasync.utils import get_brains
 all_events_timeout = 6
 
 
-def create_events(objs, INostrEvent, timeout):
+# def create_events(objs, INostrEvent, timeout):
+def create_events(event_sets, timeout):
     """Creates Nostr events using a list of objects and a passed adapter and
     publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager(timeout)
 
-    for count, i in enumerate(objs):
+    for event_set in event_sets:
+        for count, i in enumerate(event_set["brains"]):
 
-        obj = i.getObject() if ICatalogBrain.providedBy(i) else i
+            obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
-        n = INostrEvent(obj)
-        event = Event(kind=n.kind(), content=n.content(), tags=n.tags())
-        client.publish_event(relay_manager, private_key, event)
+            n = event_set["adapter"](obj)
+            event = Event(kind=n.kind(), content=n.content(), tags=n.tags())
+            client.publish_event(relay_manager, private_key, event)
 
     counter = client.sync_events(relay_manager, count)
 
     return counter
 
 
-def delete_events(objs, INostrEvent, timeout):
+# def delete_events(objs, INostrEvent, timeout):
+def delete_events(event_sets, timeout):
     """Creates Nostr deletion events using a list of objects and a passed
     adapter and publishes them on a relay."""
 
     relay_manager, private_key = client.init_relay_manager(timeout)
     pubkey = private_key.public_key.hex()
 
-    for count, i in enumerate(objs):
+    for event_set in event_sets:
+        for count, i in enumerate(event_set["brains"]):
 
-        obj = i.getObject() if ICatalogBrain.providedBy(i) else i
+            obj = i.getObject() if ICatalogBrain.providedBy(i) else i
 
-        n = INostrEvent(obj)
-        event = Event(kind=5, content="")
-        a = f"{n.kind()}:{pubkey}:{n.uid()}"
-        event.add_tag("a", a)
+            n = event_set["adapter"](obj)
+            event = Event(kind=5, content="")
+            a = f"{n.kind()}:{pubkey}:{n.uid()}"
+            event.add_tag("a", a)
 
-        client.publish_event(relay_manager, private_key, event)
+            client.publish_event(relay_manager, private_key, event)
 
     counter = client.sync_events(relay_manager, count)
 
@@ -61,28 +65,30 @@ def create_all_events():
     nostr
     """
 
-    result1 = 0
-    result2 = 0
+    event_sets = []
 
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
         "nostrmetadatasync-settings.calendar_search_params",
     )
     if brains1:
-        result1 = create_events(brains1, INostrTimeBasedCalendarEvent,
-                                all_events_timeout)
+        event_sets.append({"brains": brains1,
+                           "adapter": INostrTimeBasedCalendarEvent})
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
     if brains2:
-        result2 = create_events(brains2, INostrAmbEvent, all_events_timeout)
+        event_sets.append({"brains": brains2,
+                           "adapter": INostrAmbEvent})
+
+    result = create_events(event_sets, all_events_timeout)
 
     msg = _("Events created or updated")
     msg = translate(msg, context=getRequest())
 
-    return f"{result1+result2} {msg}"
+    return f"{result} {msg}"
 
 
 def delete_all_events():
@@ -90,25 +96,27 @@ def delete_all_events():
     nostr
     """
 
-    result1 = 0
-    result2 = 0
+    event_sets = []
 
     brains1 = get_brains(
         "nostrmetadatasync-settings.calendar_adapter_types",
         "nostrmetadatasync-settings.calendar_search_params",
     )
     if brains1:
-        result1 = delete_events(brains1, INostrTimeBasedCalendarEvent,
-                                all_events_timeout)
+        event_sets.append({"brains": brains1,
+                           "adapter": INostrTimeBasedCalendarEvent})
 
     brains2 = get_brains(
         "nostrmetadatasync-settings.amb_adapter_types",
         "nostrmetadatasync-settings.amb_search_params",
     )
     if brains2:
-        result2 = delete_events(brains2, INostrAmbEvent, all_events_timeout)
+        event_sets.append({"brains": brains2,
+                           "adapter": INostrAmbEvent})
+
+    result = create_events(event_sets, all_events_timeout)
 
     msg = _("Events deleted")
     msg = translate(msg, context=getRequest())
 
-    return f"{result1+result2} {msg}"
+    return f"{result} {msg}"
