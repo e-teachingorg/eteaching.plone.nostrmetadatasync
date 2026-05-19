@@ -1,5 +1,12 @@
 ## 1.0.0b3 (Unreleased)
 
+### Fixed
+
+- events had already been synchronised before they were all published
+- IObjectRemovedEvent subscriber is not working
+- relay_manager is not closing after sync
+
+
 ## 1.0.0b2 (2026-05-12)
 
 ### Fixed
