@@ -126,8 +126,38 @@ def parse_filters(s):
     return out
 
 
-def check_obj(obj, p_type, s_params):
+def matches(obj, filters):
+    for key, value in filters.items():
+        attr = None
 
+        if hasattr(obj, key):
+            attr = getattr(obj, key)
+        elif hasattr(obj, f"get_{key}"):
+            attr = getattr(obj, f"get_{key}")
+        elif hasattr(obj, f"get{key}"):
+            attr = getattr(obj, f"get{key}")
+
+        if callable(attr):
+            attr = attr()
+
+        if isinstance(value, (list, tuple, set)):
+            # Filter is List
+            if attr not in value:
+                return False
+        elif isinstance(attr, (list, tuple, set)):
+            # Objekt is List
+            if value not in attr:
+                return False
+        else:
+            if attr != value:
+                return False
+
+    return True
+
+
+def check_obj(obj, p_type, s_params, del_event):
+
+    brains = []
     try:
         catalog = api.portal.get_tool("portal_catalog")
         filters = parse_filters(s_params)
@@ -142,12 +172,16 @@ def check_obj(obj, p_type, s_params):
     for entry in filters:
         cf[entry[0]] = entry[1]
 
-    brains = catalog(cf)
+    if not del_event:
+        brains = catalog(cf)
+    else:
+        if matches(obj, cf):
+            brains = (1,)
 
     return True if len(brains) == 1 else False
 
 
-def suitable_adapter(obj):
+def suitable_adapter(obj, del_event=False):
     """Return the appropriate adapter based on the portal type."""
 
     registry_records = get_registry_records()
@@ -157,10 +191,10 @@ def suitable_adapter(obj):
     aat = registry_records["amb_adapter_types"]
     asp = registry_records["amb_search_params"]
 
-    check1 = check_obj(obj, cat, csp)
+    check1 = check_obj(obj, cat, csp, del_event)
     if check1:
         return INostrTimeBasedCalendarEvent
-    check2 = check_obj(obj, aat, asp)
+    check2 = check_obj(obj, aat, asp, del_event)
     if check2:
         return INostrAmbEvent
 

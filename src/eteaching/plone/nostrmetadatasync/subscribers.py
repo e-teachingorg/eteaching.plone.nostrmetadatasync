@@ -89,7 +89,7 @@ def modified(context, event):
 def deleted(context, event):
     """IObjectRemovedEvent"""
 
-    adapter = suitable_adapter(context)
+    adapter = suitable_adapter(context, del_event=True)
 
     if adapter:
         print("---> Delete (deleted)")
