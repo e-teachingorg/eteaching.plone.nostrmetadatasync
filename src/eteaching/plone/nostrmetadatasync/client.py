@@ -36,12 +36,12 @@ def sync_events(relay_manager, count):
     msg = capture_pynostr_warnings(lambda: relay_manager.run_sync())
     if msg:
         raise Exception(f"[NOSTR] {msg}")
-    
+
     # allow the messages to send
     if count > 1:
         print("-------> Sleep 5 sec")
         time.sleep(5)
-    
+
     counter = 0
 
     while relay_manager.message_pool.has_ok_notices():

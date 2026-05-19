@@ -32,6 +32,9 @@ def create_events(event_sets, timeout):
 
     counter = client.sync_events(relay_manager, count)
 
+    for relay in relay_manager.relays.values():
+        relay.close()
+
     return counter
 
 
@@ -56,6 +59,9 @@ def delete_events(event_sets, timeout):
             client.publish_event(relay_manager, private_key, event)
 
     counter = client.sync_events(relay_manager, count)
+
+    for relay in relay_manager.relays.values():
+        relay.close()
 
     return counter
 
