@@ -11,7 +11,7 @@ from eteaching.plone.nostrmetadatasync.interfaces import (
 from eteaching.plone.nostrmetadatasync.utils import get_brains
 
 
-all_events_timeout = 7
+all_events_timeout = 10
 
 
 # def create_events(objs, INostrEvent, timeout):
