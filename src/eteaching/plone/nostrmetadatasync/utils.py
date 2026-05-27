@@ -155,6 +155,40 @@ def matches(obj, filters):
     return True
 
 
+SPECIAL_FILTERS = {
+    ("start", "future"): lambda q: {
+        **q,
+        "end": {'query': DateTime(), 'range': 'min'}
+    },
+    ("start", "strict_future"): lambda q: {
+        **q,
+        "start": {'query': DateTime(), 'range': 'min'}
+    },
+    ("start", "past"): lambda q: {
+        **q,
+        "end": {'query': DateTime(), 'range': 'max'}
+    },
+}
+
+
+def normalize_query(query: dict) -> dict:
+    """ Also support the non-Plone Catalog-specific key-value pairs
+    start=future, start=strict_future and start=past """
+
+    q = dict(query)
+
+    for key, value in list(q.items()):
+        if isinstance(value, list) and len(value) == 1:
+            value = value[0]
+
+        transform = SPECIAL_FILTERS.get((key, value))
+        if transform:
+            q.pop(key)
+            q = transform(q)
+
+    return q
+
+
 def check_obj(obj, p_type, s_params, del_event):
 
     brains = []
@@ -171,6 +205,8 @@ def check_obj(obj, p_type, s_params, del_event):
 
     for entry in filters:
         cf[entry[0]] = entry[1]
+
+    cf = normalize_query(cf)
 
     if not del_event:
         brains = catalog(cf)
@@ -216,6 +252,7 @@ def get_brains(portal_types, search_params):
     for i in f:
         cf[i[0]] = i[1]
     cf["portal_type"] = p
+    cf = normalize_query(cf)
 
     return catalog(cf)
 

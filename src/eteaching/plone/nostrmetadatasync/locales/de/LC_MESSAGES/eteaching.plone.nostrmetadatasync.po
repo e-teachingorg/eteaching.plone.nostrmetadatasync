@@ -114,7 +114,8 @@ msgstr "Zusatzfilter für Kalendertermine"
 msgid "help_calendar_search_params"
 msgstr ""
 "Zusätzliche Filter für Termine im Kalender (z.B. key1=value1;key2=value2;"
-"key1=value3)"
+"key1=value3). Es werden auch start=future oder start=past unterstützt, für "
+"Termine, die in der Zukunft, bzw. in der Vergangenheit liegen."
 
 #. Default: "AMB adapter types"
 #: interfaces.py:64
