@@ -6,6 +6,10 @@
 - IObjectRemovedEvent subscriber is not working
 - relay_manager is not closing after sync
 
+### Added
+
+- Support for value pairs that are not specific to plone catalog, such as start=future
+
 
 ## 1.0.0b2 (2026-05-12)
 
