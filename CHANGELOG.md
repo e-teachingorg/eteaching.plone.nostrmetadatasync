@@ -1,5 +1,9 @@
 ## 1.0.0b4 (Unreleased)
 
+### Fixed
+
+- Do not terminate with an error if "value" is an empty list in utils.normalize_query
+
 ## 1.0.0b3 (2026-06-01)
 
 ### Fixed
