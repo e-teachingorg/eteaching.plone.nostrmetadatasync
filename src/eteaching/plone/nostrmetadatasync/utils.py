@@ -181,7 +181,11 @@ def normalize_query(query: dict) -> dict:
         if isinstance(value, list) and len(value) == 1:
             value = value[0]
 
-        transform = SPECIAL_FILTERS.get((key, value))
+        try:
+            transform = SPECIAL_FILTERS.get((key, value))
+        except TypeError:
+            transform = None
+
         if transform:
             q.pop(key)
             q = transform(q)
