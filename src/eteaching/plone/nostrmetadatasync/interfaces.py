@@ -63,6 +63,18 @@ class INostrMetadataSyncSettings(Interface):
         required=False,
     )
 
+    communities_calendar = schema.Tuple(
+        title=_("label_communities_calendar",
+                default="Communities with which calendar type is synced"),
+        description=_(
+            "help_communities_calendar",
+            default=("One community hex public key per line (e.g. 5c090631223f"
+                     "8ead4c5b4b5091a072d321452db4116684b349b1b72ad37fffec)")
+        ),
+        value_type=schema.TextLine(),
+        required=False,
+    )
+
     amb_adapter_types = schema.List(
         title=_("label_amb_adapter_types", default="AMB adapter types"),
         description=_(
@@ -85,6 +97,18 @@ class INostrMetadataSyncSettings(Interface):
         ),
         default="",
         missing_value="",
+        required=False,
+    )
+
+    communities_amb = schema.Tuple(
+        title=_("label_communities_amb",
+                default="Communities with which the amb type is synced"),
+        description=_(
+            "help_communities_amb",
+            default=("One community hex public key per line (e.g. 5c090631223f"
+                     "8ead4c5b4b5091a072d321452db4116684b349b1b72ad37fffec)")
+        ),
+        value_type=schema.TextLine(),
         required=False,
     )
 

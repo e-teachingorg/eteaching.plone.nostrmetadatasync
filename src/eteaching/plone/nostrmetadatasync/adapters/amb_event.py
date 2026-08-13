@@ -95,6 +95,7 @@ class NostrAmbEvent:
             ("datePublished", self.amb_date_published()),
             ("dateModified", self.amb_date_modified()),
             ("r", self.amb_id()),
+            ("h", self.community_pubkeys()),
         )
 
         # Filter elements that are None
@@ -168,3 +169,9 @@ class NostrAmbEvent:
     def amb_id(self):
         url = self.context.absolute_url()
         return replace_base_url(url)
+
+    def community_pubkeys(self):
+        ca = api.portal.get_registry_record(
+            "nostrmetadatasync-settings.communities_amb", default=None
+        )
+        return ca
