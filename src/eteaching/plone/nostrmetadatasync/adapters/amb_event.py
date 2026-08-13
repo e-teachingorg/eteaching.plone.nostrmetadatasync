@@ -49,7 +49,7 @@ class NostrAmbEvent:
         result = []
 
         def flatten(prefix, obj):
-            if isinstance(obj, dict):  # Dict → tiefer gehen
+            if isinstance(obj, dict):
                 for k, v in obj.items():
                     yield from flatten(f"{prefix}:{k}", v)
             elif isinstance(obj, (tuple, list)) and not isinstance(
