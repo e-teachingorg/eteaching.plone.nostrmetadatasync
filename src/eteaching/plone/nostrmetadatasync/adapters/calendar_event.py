@@ -1,17 +1,15 @@
-import hashlib
-
 import pytz
 from plone import api
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
+from eteaching.plone.nostrmetadatasync.adapters import base
 from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
-from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrTimeBasedCalendarEvent)
 @adapter(Interface)
-class NostrTimeBasedCalendarEvent:
+class NostrTimeBasedCalendarEvent(base.NostrEventMixin):
     """Adapter for Nostr Time-Based Calendar Event that reads
     its data from a Plone event object (plone.app.event).
 
@@ -43,29 +41,24 @@ class NostrTimeBasedCalendarEvent:
         return 31923
 
     def tags(self):
-        return (
+        tags = (
             ("d", self.uid()),
             ("title", self._title()),
-            ("summary", self._sumary()),
+            ("summary", self._description()),
             ("start", str(self._start())),
             ("end", str(self._end())),
             ("start_tzid", self._start_tzid()),
             ("end_tzid", self._end_tzid()),
-            ("r", self._event_url()),
+            ("r", self._url()),
+            ("h", self._community_pubkeys()),
         )
 
-    def content(self):
-        return self.context.description
+        # Filter elements that are None
+        filtered = tuple(item for item in tags if item[1] is not None)
+        # Expand tuple values
+        normalized = self._expand_tags(*filtered)
 
-    def uid(self):
-        s = self.context.UID()
-        return hashlib.sha256(s.encode()).hexdigest()
-
-    def _title(self):
-        return self.context.title
-
-    def _sumary(self):
-        return self.context.description
+        return normalized
 
     def _start(self):
         return int(self.tz_start.timestamp())  # to unix seconds
@@ -91,10 +84,6 @@ class NostrTimeBasedCalendarEvent:
             return self.tz_end.tzinfo.zone
         return ""
 
-    def _event_url(self):
-        url = self.context.absolute_url()
-        return replace_base_url(url)
-
     def _tz_datetime(self, dt):
         if not dt:
             return None
@@ -103,3 +92,9 @@ class NostrTimeBasedCalendarEvent:
             ptz = pytz.timezone(ptz)
             dt = dt.astimezone(ptz)
         return dt
+
+    def _community_pubkeys(self):
+        ca = api.portal.get_registry_record(
+            "nostrmetadatasync-settings.communities_calendar", default=None
+        )
+        return ca

@@ -1,4 +1,3 @@
-import hashlib
 import inspect
 
 from DateTime import DateTime
@@ -6,13 +5,13 @@ from plone import api
 from zope.component import adapter
 from zope.interface import Interface, implementer
 
+from eteaching.plone.nostrmetadatasync.adapters import base
 from eteaching.plone.nostrmetadatasync.interfaces import INostrAmbEvent
-from eteaching.plone.nostrmetadatasync.utils import replace_base_url
 
 
 @implementer(INostrAmbEvent)
 @adapter(Interface)
-class NostrAmbEvent:
+class NostrAmbEvent(base.NostrEventMixin):
     """Interface for Nostr AMB Event that reads
     its data from a Plone type.
 
@@ -37,48 +36,6 @@ class NostrAmbEvent:
     def __init__(self, context):
         self.context = context
 
-    def expand_tags(self, *tags):
-        """Respect flattening rules
-        1. ("keywords": ("Math", "Physics"))
-        ---> ("t", "Math"), ("t", "Physics")
-        2. ('creator', ({'id': 'ka', 'name': 'Karl'}, {'id': 'tr', 'name': 'Trude'}))
-        ---> ('creator:id', 'ka'), ('creator:name', 'Karl'), ('creator:id', 'tr'), ('creator:name', 'Trude')
-        3. ('creator', ({'name': 'Karl'}, {'name': 'Trude'}))
-        ---> ('creator:name', 'Karl'), ('creator:name', 'Trude')
-        """
-        result = []
-
-        def flatten(prefix, obj):
-            if isinstance(obj, dict):
-                for k, v in obj.items():
-                    yield from flatten(f"{prefix}:{k}", v)
-            elif isinstance(obj, (tuple, list)) and not isinstance(
-                obj, str
-            ):  # Iterable
-                for v in obj:
-                    yield from flatten(prefix, v)
-            else:  # Simple value
-                yield (prefix, obj)
-
-        for key, value in tags:
-
-            # Iterable
-            if isinstance(value, (tuple, list)) and not isinstance(value, str):
-                for v in value:
-                    # Dict or simple value
-                    result += list(flatten(key, v))
-                continue
-
-            # Simple Dict
-            if isinstance(value, dict):
-                result += list(flatten(key, value))
-                continue
-
-            # Simple Value
-            result.append((key, value))
-
-        return tuple(result)
-
     def kind(self):
         return 30142
 
@@ -86,40 +43,27 @@ class NostrAmbEvent:
         tags = (
             ("d", self.uid()),
             ("type", self.amb_type()),
-            ("name", self.amb_name()),
-            ("description", self.amb_description()),
+            ("name", self._title()),
+            ("description", self._description()),
             ("t", self.amb_keywords()),
             ("inLanguage", self.amb_in_language()),
             ("creator", self.amb_creator()),
             ("dateCreated", self.amb_date_created()),
             ("datePublished", self.amb_date_published()),
             ("dateModified", self.amb_date_modified()),
-            ("r", self.amb_id()),
-            ("h", self.community_pubkeys()),
+            ("r", self._url()),
+            ("h", self._community_pubkeys()),
         )
 
         # Filter elements that are None
         filtered = tuple(item for item in tags if item[1] is not None)
         # Expand tuple values
-        normalized = self.expand_tags(*filtered)
+        normalized = self._expand_tags(*filtered)
 
         return normalized
 
-    def content(self):
-        return self.context.description
-
-    def uid(self):
-        s = self.context.UID()
-        return hashlib.sha256(s.encode()).hexdigest()
-
     def amb_type(self):
         return "LearningResource"
-
-    def amb_name(self):
-        return self.context.title
-
-    def amb_description(self):
-        return self.context.description
 
     def amb_keywords(self):
         return getattr(self.context, "subject", None)
@@ -166,11 +110,7 @@ class NostrAmbEvent:
                 return c().ISO8601()
         return None
 
-    def amb_id(self):
-        url = self.context.absolute_url()
-        return replace_base_url(url)
-
-    def community_pubkeys(self):
+    def _community_pubkeys(self):
         ca = api.portal.get_registry_record(
             "nostrmetadatasync-settings.communities_amb", default=None
         )
