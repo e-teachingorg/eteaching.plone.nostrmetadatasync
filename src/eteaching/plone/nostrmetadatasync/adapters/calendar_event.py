@@ -4,19 +4,22 @@ from zope.component import adapter
 from zope.interface import Interface, implementer
 
 from eteaching.plone.nostrmetadatasync.adapters import base
-from eteaching.plone.nostrmetadatasync.interfaces import INostrTimeBasedCalendarEvent
+from eteaching.plone.nostrmetadatasync.interfaces import (
+    INostrTimeBasedCalendarEvent
+)
 
 
 @implementer(INostrTimeBasedCalendarEvent)
 @adapter(Interface)
 class NostrTimeBasedCalendarEvent(base.NostrEventMixin):
-    """Adapter for Nostr Time-Based Calendar Event that reads
+    """Adapter for Nostr Date-Based or Time-Based Calendar Event that reads
     its data from a Plone event object (plone.app.event).
 
-    Kind Number: 31923
+    Kind Number: 31922 (Date-Based) / 31923 (Time-Based)
     Event Range: Addressable
     Defined in: NIP-52
-    URL: https://nostrbook.dev/kinds/31923
+    URL: https://nostrbook.dev/kinds/31922
+         https://nostrbook.dev/kinds/31923
 
     // Usage with pynostr
 
@@ -38,6 +41,8 @@ class NostrTimeBasedCalendarEvent(base.NostrEventMixin):
         self.tz_end = self._tz_datetime(self.context.end)
 
     def kind(self):
+        if getattr(self.context, "whole_day", False):
+            return 31922
         return 31923
 
     def tags(self):
@@ -45,8 +50,8 @@ class NostrTimeBasedCalendarEvent(base.NostrEventMixin):
             ("d", self.uid()),
             ("title", self._title()),
             ("summary", self._description()),
-            ("start", str(self._start())),
-            ("end", str(self._end())),
+            ("start", self._start()),
+            ("end", self._end()),
             ("start_tzid", self._start_tzid()),
             ("end_tzid", self._end_tzid()),
             ("r", self._url()),
@@ -61,28 +66,43 @@ class NostrTimeBasedCalendarEvent(base.NostrEventMixin):
         return normalized
 
     def _start(self):
-        return int(self.tz_start.timestamp())  # to unix seconds
+        if (
+            getattr(self.context, "whole_day", False)
+            and self.tz_start
+        ):
+            return str(self.context.start.date().isoformat())
+        return str(int(self.tz_start.timestamp()))  # to unix seconds
 
     def _end(self):
+        if (
+            getattr(self.context, "whole_day", False)
+            and self.tz_end
+            and not getattr(self.context, "open_end", False)
+        ):
+            return str(self.context.end.date().isoformat())
         if (
             not getattr(self.context, "open_end", False)
             and self.tz_end
             and self.tz_end > self.tz_start
         ):
-            return int(self.tz_end.timestamp())  # to unix seconds
-        return ""
+            return str(int(self.tz_end.timestamp()))  # to unix seconds
+        return None
 
     def _start_tzid(self):
+        if getattr(self.context, "whole_day", False):
+            return None
         return self.tz_start.tzinfo.zone
 
     def _end_tzid(self):
+        if getattr(self.context, "whole_day", False):
+            return None
         if (
             not getattr(self.context, "open_end", False)
             and self.tz_end
             and self.tz_end > self.tz_start
         ):
             return self.tz_end.tzinfo.zone
-        return ""
+        return None
 
     def _tz_datetime(self, dt):
         if not dt:
