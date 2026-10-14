@@ -1,3 +1,9 @@
+## 1.0.0 (unreleased)
+
+### Added
+
+- setup.py
+
 ## 1.0.0rc1 (2026-08-17)
 
 ### Fixed
