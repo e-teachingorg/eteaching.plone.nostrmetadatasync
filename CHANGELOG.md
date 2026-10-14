@@ -1,4 +1,8 @@
-## 1.0.0b5 (unreleased)
+## 1.0.0rc1 (2026-08-17)
+
+### Fixed
+
+- All-day appointments specify a time (#1)
 
 ## 1.0.0b4 (2026-08-17)
 

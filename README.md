@@ -2,14 +2,14 @@
 
 Nostr integration for Plone 6.
 
-eteaching.plone.nostrmetadatasync synchronises metadata of Plone contents 
-with Nostr. This is done on the basis of subscribers (event handlers). When 
-content is created, deleted or modified on the Plone website, corresponding 
-Nostr events are created, signed and sent to predefined relias in the Nostr 
+eteaching.plone.nostrmetadatasync synchronises metadata of Plone contents
+with Nostr. This is done on the basis of subscribers (event handlers). When
+content is created, deleted or modified on the Plone website, corresponding
+Nostr events are created, signed and sent to predefined relias in the Nostr
 network. Two control panels are also provided. One is for settings, where
 you can specify which content types and filters should be used to select
-the content affected by synchronization. The second control panel can be 
-used to create all events in the Nostre relays for the entire content 
+the content affected by synchronization. The second control panel can be
+used to create all events in the Nostre relays for the entire content
 selected using the settings, or to send delete events.
 
 ## Features
@@ -30,6 +30,8 @@ selected using the settings, or to send delete events.
 -   [Git](https://6.docs.plone.org/install/create-project-cookieplone.html#git)
 
 ### Install eteaching.plone.nostrmetadatasync from source with `git` 🔧
+
+This is not an installation for production use, but rather for testing and development purposes.
 
 1.  Clone this repository, then change your working directory
 
@@ -63,7 +65,7 @@ selected using the settings, or to send delete events.
     make install
     ```
 
-5.	Create the Plone site
+5.	Create a empty Plone site (user:admin, password:admin)
 
 	```shell
 	make create-site
@@ -111,7 +113,7 @@ selected using the settings, or to send delete events.
 
 	```shell
 	[buildout]
-	
+
 	eggs =
 	    eteaching.plone.nostrmetadatasync
 	...
@@ -126,13 +128,41 @@ selected using the settings, or to send delete events.
 5. Run buildout
 
 	```shell
-	bin/buildout	
+	bin/buildout
 	```
 6. Start
 
 	```shell
 	bin/instance fg
 	```
+
+### Example: Set up synchronization for Plone News Items
+
+
+1. Open your Plone site (e.g. http://localhost:8080/Plone for testing) in your browser
+
+2. Login
+
+3. Click "admin" ➔ "Site Setup"
+
+4. Under "Add-ons", check to see if the "Nostr Metadata Sync" add-on is installed. If not, install it.
+
+5. Then go back to "Site Setup" ➔ "Add-on Configuration" ➔ "Nostr Metadata Sync management"
+
+7. Click "Configure this add-on"
+
+8. Enter nostr relays. (If you've started Nak with `nak serve` on the same computer, enter the following: ws://localhost:10547)
+
+9. Enable "News Item" under "Calendar adapter types"
+
+10. You can enter additional search filters and also specify a community key if you want to sync to a specific community
+
+11. Click "Save"
+
+Now, when you create News Items in the portal and publish them, they should sync with the relays you've entered.
+
+
+
 
 ## Contribute
 
