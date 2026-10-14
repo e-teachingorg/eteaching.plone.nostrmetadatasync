@@ -151,7 +151,7 @@ This is not an installation for production use, but rather for testing and devel
 
 7. Click "Configure this add-on"
 
-8. Enter relays
+8. Enter nostr relay(s)
 
 9. Enable "News Item" under "Calendar adapter types"
 
