@@ -151,7 +151,7 @@ This is not an installation for production use, but rather for testing and devel
 
 7. Click "Configure this add-on"
 
-8. Enter nostr relay(s)
+8. Enter nostr relays. (If you've started Nak with `nak serve` on the same computer, enter the following: ws://localhost:10547)
 
 9. Enable "News Item" under "Calendar adapter types"
 
@@ -159,7 +159,7 @@ This is not an installation for production use, but rather for testing and devel
 
 11. Click "Save"
 
-Now, when you create News Items in the portal and publish them, they should sync with the relays you've entered
+Now, when you create News Items in the portal and publish them, they should sync with the relays you've entered.
 
 
 
