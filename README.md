@@ -143,11 +143,11 @@ This is not an installation for production use, but rather for testing and devel
 
 2. Login
 
-3. Click "admin" --> "Site Setup"
+3. Click "admin" ➔ "Site Setup"
 
 4. Under "Add-ons", check to see if the "Nostr Metadata Sync" add-on is installed. If not, install it.
 
-5. Then go back to "Site Setup" --> "Add-on Configuration" --> "Nostr Metadata Sync management"
+5. Then go back to "Site Setup" ➔ "Add-on Configuration" ➔ "Nostr Metadata Sync management"
 
 7. Click "Configure this add-on"
 
